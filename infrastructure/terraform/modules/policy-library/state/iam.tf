@@ -26,20 +26,4 @@ data "aws_iam_policy_document" "this" {
       "arn:aws:s3:::${local.state_bucket}/*"
     ]
   }
-
-  statement {
-    sid    = "TerraformStateLocking"
-    effect = "Allow"
-    actions = [
-      "dynamodb:CreateTable",
-      "dynamodb:DescribeTable",
-      "dynamodb:GetItem",
-      "dynamodb:PutItem",
-      "dynamodb:DeleteItem",
-      "dynamodb:UpdateItem"
-    ]
-    resources = [
-      "arn:aws:dynamodb:*:*:table/${local.state_table}"
-    ]
-  }
 }

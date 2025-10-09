@@ -3,6 +3,9 @@ name: Deploy Control Plane
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
 
 env:
@@ -53,7 +56,6 @@ jobs:
           # Configure backend with values from config secret
           terraform init \
             -backend-config bucket=${{ secrets.STATE_BUCKET }} \
-            -backend-config dynamodb_table=${{ secrets.STATE_TABLE }} \
             -backend-config region=${{ env.AWS_REGION }}
 
       - name: Terraform Plan
