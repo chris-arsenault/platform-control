@@ -19,19 +19,6 @@ data "aws_iam_policy_document" "deploy_manage_iam" {
   }
 
   statement {
-    sid    = "AllAccountStateLock"
-    effect = "Allow"
-    actions = [
-      "dynamodb:CreateTable",
-      "dynamodb:Describe*",
-      "dynamodb:List*",
-    ]
-    resources = [
-      "arn:aws:dynamodb:*:*:table/tf-lock-*"
-    ]
-  }
-
-  statement {
     sid    = "ManagePrefixedRoles"
     effect = "Allow"
     actions = [
