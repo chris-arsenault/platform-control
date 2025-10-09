@@ -1,0 +1,71 @@
+name: Deploy Control Plane
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  AWS_REGION: us-east-1
+
+permissions:
+  id-token: write   # required for OIDC
+  contents: read
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: infrastructure/terraform
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.OIDC_ROLE }}
+          role-session-name: GitHubActions-${{ github.run_id }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Verify AWS identity
+        run: |
+          aws sts get-caller-identity
+
+      - name: Cache Terraform plugins
+        uses: actions/cache@v4
+        with:
+          path: ~/.terraform.d/plugin-cache
+          key: ${{ runner.os }}-tf-plugins
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.12.2
+
+      - name: Terraform Init
+        env:
+          TF_CLI_ARGS: -no-color
+        run: |
+          # Configure backend with values from config secret
+          terraform init \
+            -backend-config bucket=${{ secrets.STATE_BUCKET }} \
+            -backend-config dynamodb_table=${{ secrets.STATE_TABLE }} \
+            -backend-config region=${{ env.AWS_REGION }}
+
+      - name: Terraform Plan
+        env:
+          TF_VAR_github_pat: ${{ secrets.PAT }}
+          TF_CLI_ARGS: -no-color
+        run: |
+          terraform plan -input=false -out=tfplan
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        env:
+          TF_CLI_ARGS: -no-color
+        run: |
+          terraform apply -input=false -auto-approve tfplan

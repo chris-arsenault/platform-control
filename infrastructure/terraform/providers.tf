@@ -1,0 +1,26 @@
+terraform {
+  required_version = ">= 1.12"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.60"
+    }
+  }
+
+  backend "s3" {
+    region = "us-east-1"
+    key    = "aws-boilerplate.tfstate"
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"
+
+  default_tags {
+    tags = {
+      Project   = "AWS Boilerplate"
+      ManagedBy = "Terraform"
+    }
+  }
+}

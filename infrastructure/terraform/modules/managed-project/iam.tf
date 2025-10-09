@@ -1,0 +1,70 @@
+locals {
+
+  allowed_repos = [for r in var.allowed_repos : "chris-arsenault/${r}"]
+  # Build allowed 'sub' claims for refs and optionally envs:
+  # - repo:OWNER/REPO:ref:refs/heads/<branch>
+  # - repo:OWNER/REPO:environment:<env>
+  allowed_subs = concat(
+    flatten([
+      for r in local.allowed_repos : [
+        for b in var.allowed_branches : "repo:${r}:ref:refs/heads/${b}"
+      ]
+    ]),
+    flatten([
+      for r in local.allowed_repos : [
+        for e in var.allowed_environments : "repo:${r}:environment:${e}"
+      ]
+    ])
+  )
+}
+
+data "aws_iam_policy_document" "assume_role" {
+  statement {
+    effect = "Allow"
+    principals {
+      type        = "Federated"
+      identifiers = [var.oidc_provider_arn]
+    }
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+
+    condition {
+      test     = "StringEquals"
+      variable = "token.actions.githubusercontent.com:aud"
+      values   = ["sts.amazonaws.com"]
+    }
+
+    condition {
+      test     = "StringLike"
+      variable = "token.actions.githubusercontent.com:sub"
+      values   = length(local.allowed_subs) > 0 ? local.allowed_subs : ["repo:UNKNOWN/*"]
+    }
+  }
+}
+
+resource "aws_iam_role" "this" {
+  name                 = "${var.project_prefix}-deployer"
+  assume_role_policy   = data.aws_iam_policy_document.assume_role.json
+  permissions_boundary = var.permissions_boundary_arn
+  tags                 = var.tags
+  path                 = "/${var.prefix}/${var.project_prefix}/"
+}
+
+resource "aws_iam_role_policy_attachment" "managed" {
+  for_each   = toset(var.policy_arns)
+  role       = aws_iam_role.this.name
+  policy_arn = each.value
+}
+
+resource "aws_iam_role_policy" "inline" {
+  for_each = var.inline_policies
+  role     = aws_iam_role.this.id
+  name     = each.key
+  policy   = each.value
+}
+
+resource "aws_iam_role_policy" "inline_modules" {
+  for_each = var.policy_modules
+  role     = aws_iam_role.this.id
+  name     = each.value
+  policy   = local.policy_map[each.value]
+}
