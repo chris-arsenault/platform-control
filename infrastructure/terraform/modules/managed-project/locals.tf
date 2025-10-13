@@ -15,4 +15,8 @@ locals {
     "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole",
     "arn:aws:iam::aws:policy/ReadOnlyAccess"
   ]
+
+  tags = merge(var.tags, {
+    Project = var.prefix
+  })
 }

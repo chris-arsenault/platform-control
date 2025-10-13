@@ -33,6 +33,7 @@ variable "policy_modules" {
 variable "tags" {
   description = "Tags to apply to the role"
   type        = map(string)
+  default     = {}
 }
 
 variable "account_id" {
