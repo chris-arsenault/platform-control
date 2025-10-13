@@ -1,20 +1,27 @@
 locals {
 
   allowed_repos = [for r in var.allowed_repos : "chris-arsenault/${r}"]
-  # Build allowed 'sub' claims for refs and optionally envs:
+  branch_subs = flatten([
+    for r in local.allowed_repos : [
+      for b in var.allowed_branches : "repo:${r}:ref:refs/heads/${b}"
+    ]
+  ])
+  environment_subs = flatten([
+    for r in local.allowed_repos : [
+      for e in var.allowed_environments : "repo:${r}:environment:${e}"
+    ]
+  ])
+  pull_request_subs = flatten([
+    for r in local.allowed_repos : var.allow_pull_request ? ["repo:${r}:pull_request"] : []
+  ])
+  # Build allowed 'sub' claims for refs, envs, and optionally PR runs:
   # - repo:OWNER/REPO:ref:refs/heads/<branch>
   # - repo:OWNER/REPO:environment:<env>
+  # - repo:OWNER/REPO:pull_request
   allowed_subs = concat(
-    flatten([
-      for r in local.allowed_repos : [
-        for b in var.allowed_branches : "repo:${r}:ref:refs/heads/${b}"
-      ]
-    ]),
-    flatten([
-      for r in local.allowed_repos : [
-        for e in var.allowed_environments : "repo:${r}:environment:${e}"
-      ]
-    ])
+    local.branch_subs,
+    local.environment_subs,
+    local.pull_request_subs
   )
 }
 
