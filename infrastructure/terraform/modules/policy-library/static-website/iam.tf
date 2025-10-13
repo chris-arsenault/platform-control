@@ -1,9 +1,25 @@
+locals {
+  s3_bucket_namespace_arn = "arn:aws:s3:::${var.prefix}-*"
+  s3_object_namespace_arn = "arn:aws:s3:::${var.prefix}-*/*"
+}
+
 data "aws_iam_policy_document" "this" {
+  # Bucket creation cannot be scoped to a specific ARN because the bucket does not exist yet.
+  statement {
+    sid    = "S3WebsiteBucketCreate"
+    effect = "Allow"
+    actions = [
+      "s3:CreateBucket"
+    ]
+    resources = [
+      "*"
+    ]
+  }
+
   statement {
     sid    = "S3WebsiteBucketManagement"
     effect = "Allow"
     actions = [
-      "s3:CreateBucket",
       "s3:DeleteBucket",
       "s3:ListBucket",
       "s3:PutBucketVersioning",
@@ -18,7 +34,7 @@ data "aws_iam_policy_document" "this" {
       "s3:Get*"
     ]
     resources = [
-      "*"
+      local.s3_bucket_namespace_arn
     ]
   }
 
@@ -27,13 +43,13 @@ data "aws_iam_policy_document" "this" {
     effect = "Allow"
     actions = [
       "s3:GetObject",
+      "s3:GetObjectTagging",
       "s3:PutObject",
       "s3:PutObjectTagging",
-      "s3:DeleteObject",
-      "s3:ListBucket"
+      "s3:DeleteObject"
     ]
     resources = [
-      "*"
+      local.s3_object_namespace_arn
     ]
   }
 
