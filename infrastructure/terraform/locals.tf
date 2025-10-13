@@ -2,11 +2,10 @@ data "aws_caller_identity" "current" {}
 
 locals {
   account_id = data.aws_caller_identity.current.account_id
-  prefix     = "aws-boilerplate"
+
 
   deployment_repo = "chris-arsenault/aws-boilerplate"
 
-  oidc_url             = "token.actions.githubusercontent.com"
   deployment_role_name = "boilerplate-deployer"
 
   control_plane_permissions_boundary_name      = "${local.prefix}-deploy-control-plane"

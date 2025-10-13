@@ -9,8 +9,8 @@ terraform {
   }
 
   backend "s3" {
-    region = "us-east-1"
-    key    = "aws-boilerplate.tfstate"
+    region       = "us-east-1"
+    key          = "aws-boilerplate.tfstate"
     use_lockfile = true
   }
 }

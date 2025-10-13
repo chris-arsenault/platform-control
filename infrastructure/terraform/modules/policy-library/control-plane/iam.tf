@@ -1,7 +1,7 @@
 # Policy that lets the deployment role:
 # - manage IAM roles whose name begins with var.role_name_prefix
 # - manage this exact deployment role (for drift fixes), but not delete it
-data "aws_iam_policy_document" "deploy_manage_iam" {
+data "aws_iam_policy_document" "this" {
   statement {
     sid    = "AllAccountStateManagment"
     effect = "Allow"
@@ -38,7 +38,7 @@ data "aws_iam_policy_document" "deploy_manage_iam" {
       "iam:ListInstanceProfilesForRole"
     ]
     resources = [
-      "arn:aws:iam::${local.account_id}:role/${local.prefix}*"
+      "arn:aws:iam::${var.account_id}:role/${var.prefix}*"
     ]
   }
 
@@ -58,16 +58,7 @@ data "aws_iam_policy_document" "deploy_manage_iam" {
     resources = ["*"]
   }
 
-  statement {
-    sid    = "ReadOnlyDescribe"
-    effect = "Allow"
-    actions = [
-      "iam:List*",
-      "iam:Get*",
-      "sts:GetCallerIdentity"
-    ]
-    resources = ["*"]
-  }
+
 
   statement {
     sid    = "ManageSelfRolePolicy"
@@ -84,14 +75,14 @@ data "aws_iam_policy_document" "deploy_manage_iam" {
       "iam:ListAttachedRolePolicies",
       "iam:ListRolePolicies"
     ]
-    resources = ["arn:aws:iam::${local.account_id}:role/${local.deployment_role_name}"]
+    resources = ["arn:aws:iam::${var.account_id}:role/${local.deployment_role_name}"]
   }
 
   statement {
     sid       = "DenyDeleteSelf"
     effect    = "Deny"
     actions   = ["iam:DeleteRole"]
-    resources = ["arn:aws:iam::${local.account_id}:role/${local.deployment_role_name}"]
+    resources = ["arn:aws:iam::${var.account_id}:role/${local.deployment_role_name}"]
   }
 
   # Allow create/modify prefixed roles; the boundary above still enforces guardrails

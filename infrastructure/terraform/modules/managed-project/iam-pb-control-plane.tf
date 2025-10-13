@@ -115,9 +115,3 @@ data "aws_iam_policy_document" "pb_control_plane" {
     resources = [local.prefixed_roles_arn]
   }
 }
-
-resource "aws_iam_policy" "pb_control_plane" {
-  name        = local.control_plane_permissions_boundary_name
-  description = "Boundary for Terraform deployment: require approved boundary on CreateRole; deny Users/Groups; allow policy creation."
-  policy      = data.aws_iam_policy_document.pb_control_plane.json
-}

@@ -6,11 +6,6 @@ locals {
       for b in var.allowed_branches : "repo:${r}:ref:refs/heads/${b}"
     ]
   ])
-  environment_subs = flatten([
-    for r in local.allowed_repos : [
-      for e in var.allowed_environments : "repo:${r}:environment:${e}"
-    ]
-  ])
   pull_request_subs = flatten([
     for r in local.allowed_repos : var.allow_pull_request ? ["repo:${r}:pull_request"] : []
   ])
@@ -20,7 +15,6 @@ locals {
   # - repo:OWNER/REPO:pull_request
   allowed_subs = concat(
     local.branch_subs,
-    local.environment_subs,
     local.pull_request_subs
   )
 }
@@ -49,24 +43,11 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_role" "this" {
-  name                 = "${var.project_prefix}-deployer"
+  name                 = "${var.prefix}-deployer"
   assume_role_policy   = data.aws_iam_policy_document.assume_role.json
-  permissions_boundary = var.permissions_boundary_arn
+  permissions_boundary = aws_iam_policy.pb_project_guardrails.arn
   tags                 = var.tags
-  path                 = "/${var.prefix}/${var.project_prefix}/"
-}
-
-resource "aws_iam_role_policy_attachment" "managed" {
-  for_each   = toset(var.policy_arns)
-  role       = aws_iam_role.this.name
-  policy_arn = each.value
-}
-
-resource "aws_iam_role_policy" "inline" {
-  for_each = var.inline_policies
-  role     = aws_iam_role.this.id
-  name     = each.key
-  policy   = each.value
+  path                 = "/${var.prefix}/"
 }
 
 resource "aws_iam_role_policy" "inline_modules" {
