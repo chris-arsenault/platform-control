@@ -29,6 +29,12 @@ variable "allowed_environments" {
   default     = []
 }
 
+variable "allow_pull_request" {
+  description = "Allow GitHub Actions OIDC tokens issued for pull_request events."
+  type        = bool
+  default     = false
+}
+
 variable "policy_arns" {
   description = "Managed policy ARNs to attach"
   type        = set(string)

@@ -7,6 +7,7 @@ module "boilerplate_project" {
   account_id        = local.account_id
 
   allowed_branches         = ["main"]
+  allow_pull_request       = true
   permissions_boundary_arn = aws_iam_policy.pb_control_plane.arn
   prefix                   = local.prefix
   project_prefix           = "boilerplate"
