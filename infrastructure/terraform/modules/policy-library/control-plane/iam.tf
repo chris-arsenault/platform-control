@@ -9,6 +9,7 @@ data "aws_iam_policy_document" "this" {
       "s3:CreateBucket",
       "s3:ListBucket",
       "s3:PutBucketVersioning",
+      "s3:PutBucketTagging",
       "s3:PutEncryptionConfiguration",
       "s3:PutBucketPublicAccessBlock",
       "s3:Get*",
@@ -124,6 +125,16 @@ data "aws_iam_policy_document" "this" {
     effect    = "Allow"
     actions   = ["iam:CreatePolicy"]
     resources = ["*"]
+  }
+
+  statement {
+    sid = "AllowPolicyUpdates"
+    effect = "Allow"
+    actions = [
+      "iam:TagPolicy",
+      "iam:DeletePolicyVersion"
+    ]
+    resources = [local.prefixed_policies_arn, "*"]
   }
 
 }
