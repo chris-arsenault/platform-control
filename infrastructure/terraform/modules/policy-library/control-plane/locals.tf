@@ -6,5 +6,5 @@ locals {
 
   # Common ARNs
   prefixed_roles_arn = "arn:aws:iam::${var.account_id}:role/${var.prefix}-*"
-  prefixed_policies_arn     = "arn:aws:iam::${var.account_id}:policy/${var.prefix}-*"
+  permissions_boundary_arn     = "arn:aws:iam::${var.account_id}:policy/pb-*"
 }

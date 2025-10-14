@@ -119,22 +119,15 @@ data "aws_iam_policy_document" "this" {
     }
   }
 
-  # Allow creating policies needed by deployments
-  statement {
-    sid       = "AllowCreatePolicies"
-    effect    = "Allow"
-    actions   = ["iam:CreatePolicy"]
-    resources = ["*"]
-  }
-
   statement {
     sid = "AllowPolicyUpdates"
     effect = "Allow"
     actions = [
+      "iam:CreatePolicy",
+      "iam:GetPolicy",
       "iam:TagPolicy",
       "iam:DeletePolicyVersion"
     ]
-    resources = [local.prefixed_policies_arn]
+    resources = [local.permissions_boundary_arn]
   }
-
 }
