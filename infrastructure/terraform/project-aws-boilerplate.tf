@@ -1,20 +1,14 @@
 module "boilerplate_project" {
   source = "./modules/managed-project"
 
-  allowed_repos     = ["aws-boilerplate"]
   oidc_provider_arn = aws_iam_openid_connect_provider.github.arn
-  github_pat        = var.github_pat
   account_id        = local.account_id
 
-  allowed_branches         = ["main"]
-  allow_pull_request       = true
-  permissions_boundary_arn = aws_iam_policy.pb_control_plane.arn
-  prefix                   = local.prefix
-  project_prefix           = "boilerplate"
+  github_pat         = var.github_pat
+  allowed_repos      = ["aws-boilerplate"]
+  allowed_branches   = ["main"]
+  allow_pull_request = true
 
-  inline_policies = {
-    "deploy" = data.aws_iam_policy_document.deploy_manage_iam.json
-  }
-
-  policy_modules = ["state"]
+  prefix         = "boilerplate"
+  policy_modules = ["control-plane", "state"]
 }

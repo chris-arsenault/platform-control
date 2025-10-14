@@ -14,7 +14,6 @@ resource "github_actions_secret" "oidc_role" {
   plaintext_value = aws_iam_role.this.arn
 }
 
-
 resource "github_actions_secret" "prefix" {
   for_each = var.allowed_repos
 
@@ -24,10 +23,10 @@ resource "github_actions_secret" "prefix" {
 }
 
 
-resource "github_actions_secret" "project_prefix" {
+resource "github_actions_secret" "pb_arn" {
   for_each = var.allowed_repos
 
   repository      = each.value
-  secret_name     = "PROJECT_PREFIX"
-  plaintext_value = var.project_prefix
+  secret_name     = "PB_ARN"
+  plaintext_value = aws_iam_policy.pb_project_guardrails.arn
 }
