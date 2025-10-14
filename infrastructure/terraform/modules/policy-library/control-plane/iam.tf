@@ -125,6 +125,7 @@ data "aws_iam_policy_document" "this" {
     actions = [
       "iam:CreatePolicy",
       "iam:GetPolicy",
+      "iam:GetPolicyVersion",
       "iam:TagPolicy",
       "iam:DeletePolicyVersion"
     ]
