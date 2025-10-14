@@ -86,26 +86,6 @@ data "aws_iam_policy_document" "this" {
     resources = ["arn:aws:iam::${var.account_id}:role/${local.deployment_role_name}"]
   }
 
-  # Allow create/modify prefixed roles; the boundary above still enforces guardrails
-  statement {
-    sid    = "AllowPrefixedRoleWork"
-    effect = "Allow"
-    actions = [
-      "iam:CreateRole",
-      "iam:UpdateAssumeRolePolicy",
-      "iam:AttachRolePolicy",
-      "iam:DetachRolePolicy",
-      "iam:PutRolePolicy",
-      "iam:DeleteRolePolicy",
-      "iam:PutRolePermissionsBoundary",
-      "iam:PassRole",
-      "iam:GetRole",
-      "iam:ListAttachedRolePolicies",
-      "iam:ListRolePolicies"
-    ]
-    resources = [local.prefixed_roles_arn]
-  }
-
   # Allow setting only the approved boundary to prefixed roles
   statement {
     sid       = "AllowSetApprovedBoundary"
