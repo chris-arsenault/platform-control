@@ -39,7 +39,7 @@ data "aws_iam_policy_document" "this" {
       "iam:ListInstanceProfilesForRole"
     ]
     resources = [
-      "arn:aws:iam::${var.account_id}:role/${var.prefix}*"
+      "arn:aws:iam::${var.account_id}:role/deployer-*"
     ]
   }
 
