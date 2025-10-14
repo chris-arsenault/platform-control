@@ -39,6 +39,7 @@ locals {
   policy_map = {
     "api"            = module.api.policy_json
     "bedrock"        = module.bedrock.policy_json
+    "control-plane"  = module.control-plane.policy_json
     "iam"            = module.iam.policy_json
     "state"          = module.state.policy_json
     "static-website" = module.static-website.policy_json
