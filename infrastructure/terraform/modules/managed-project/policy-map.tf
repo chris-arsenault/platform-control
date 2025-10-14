@@ -36,8 +36,6 @@ module "static-website" {
 
 
 locals {
-  policy_prefix = "${var.prefix}-${var.project_prefix}"
-
   policy_map = {
     "api"            = module.api.policy_json
     "bedrock"        = module.bedrock.policy_json
