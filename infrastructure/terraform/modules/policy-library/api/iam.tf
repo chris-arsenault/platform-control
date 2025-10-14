@@ -10,8 +10,8 @@ data "aws_iam_policy_document" "this" {
       "apigateway:DELETE"
     ]
     resources = [
-      "arn:aws:apigateway:us-east-1::/restapis",
-      "arn:aws:apigateway:us-east-1::/restapis/${var.prefix}-*"
+      "arn:aws:apigateway:us-east-1::/api/*",
+      "arn:aws:apigateway:us-east-1::/restapis/*"
     ]
   }
 
