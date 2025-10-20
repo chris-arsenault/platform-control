@@ -102,7 +102,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    sid = "AllowPolicyUpdates"
+    sid    = "AllowPolicyUpdates"
     effect = "Allow"
     actions = [
       "iam:CreatePolicy",

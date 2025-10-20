@@ -1,5 +1,5 @@
 data "aws_iam_policy_document" "this" {
- statement {
+  statement {
     sid = "AllowDescribesAndReads"
     actions = [
       "ec2:Describe*",
@@ -91,8 +91,8 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    sid = "PassNamespacedRolesToEc2"
-    actions = ["iam:PassRole"]
+    sid       = "PassNamespacedRolesToEc2"
+    actions   = ["iam:PassRole"]
     resources = ["arn:aws:iam::*:role/${var.prefix}-*"]
     condition {
       test     = "StringEquals"

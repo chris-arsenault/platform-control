@@ -49,6 +49,6 @@ locals {
     "iam"            = module.iam.policy_json
     "state"          = module.state.policy_json
     "static-website" = module.static-website.policy_json
-    "vpn"          = module.vpn.policy_json
+    "vpn"            = module.vpn.policy_json
   }
 }
