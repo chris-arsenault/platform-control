@@ -77,7 +77,8 @@ data "aws_iam_policy_document" "this" {
       "iam:GetPolicyVersion",
       "iam:TagPolicy",
       "iam:DeletePolicyVersion",
-      "iam:ListPolicyVersions"
+      "iam:ListPolicyVersions",
+      "iam:DeletePolicy"
     ]
     resources = [local.permissions_boundary_arn]
   }
