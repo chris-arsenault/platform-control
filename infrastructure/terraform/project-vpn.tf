@@ -1,4 +1,4 @@
-module "boilerplate_project" {
+module "vpn_project" {
   source = "./modules/managed-project"
 
   oidc_provider_arn = aws_iam_openid_connect_provider.github.arn
