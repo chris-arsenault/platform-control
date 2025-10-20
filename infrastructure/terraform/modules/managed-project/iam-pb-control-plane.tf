@@ -112,6 +112,6 @@ data "aws_iam_policy_document" "pb_control_plane" {
       "iam:ListAttachedRolePolicies",
       "iam:ListRolePolicies"
     ]
-    resources = [local.prefixed_roles_arn]
+    resources = [local.deployer_roles_arn]
   }
 }
