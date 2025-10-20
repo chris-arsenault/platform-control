@@ -34,6 +34,12 @@ module "static-website" {
   account_id = var.account_id
 }
 
+module "vpn" {
+  source     = "../policy-library/vpn"
+  prefix     = var.prefix
+  account_id = var.account_id
+}
+
 
 locals {
   policy_map = {
@@ -43,5 +49,6 @@ locals {
     "iam"            = module.iam.policy_json
     "state"          = module.state.policy_json
     "static-website" = module.static-website.policy_json
+    "vpn"          = module.vpn.policy_json
   }
 }
