@@ -9,6 +9,7 @@ data "aws_iam_policy_document" "this" {
       "s3:CreateBucket",
       "s3:ListBucket",
       "s3:PutBucketVersioning",
+      "s3:PutBucketTagging",
       "s3:PutEncryptionConfiguration",
       "s3:PutBucketPublicAccessBlock",
       "s3:Get*",
@@ -26,6 +27,7 @@ data "aws_iam_policy_document" "this" {
       "iam:DeleteRole",
       "iam:AttachRolePolicy",
       "iam:DetachRolePolicy",
+      "iam:GetRolePolicy",
       "iam:PutRolePolicy",
       "iam:DeleteRolePolicy",
       "iam:TagRole",
@@ -38,7 +40,8 @@ data "aws_iam_policy_document" "this" {
       "iam:ListInstanceProfilesForRole"
     ]
     resources = [
-      "arn:aws:iam::${var.account_id}:role/${var.prefix}*"
+      "arn:aws:iam::${var.account_id}:role/deployer-*",
+      "arn:aws:iam::${var.account_id}:role/*/deployer-*"
     ]
   }
 
@@ -85,26 +88,6 @@ data "aws_iam_policy_document" "this" {
     resources = ["arn:aws:iam::${var.account_id}:role/${local.deployment_role_name}"]
   }
 
-  # Allow create/modify prefixed roles; the boundary above still enforces guardrails
-  statement {
-    sid    = "AllowPrefixedRoleWork"
-    effect = "Allow"
-    actions = [
-      "iam:CreateRole",
-      "iam:UpdateAssumeRolePolicy",
-      "iam:AttachRolePolicy",
-      "iam:DetachRolePolicy",
-      "iam:PutRolePolicy",
-      "iam:DeleteRolePolicy",
-      "iam:PutRolePermissionsBoundary",
-      "iam:PassRole",
-      "iam:GetRole",
-      "iam:ListAttachedRolePolicies",
-      "iam:ListRolePolicies"
-    ]
-    resources = [local.prefixed_roles_arn]
-  }
-
   # Allow setting only the approved boundary to prefixed roles
   statement {
     sid       = "AllowSetApprovedBoundary"
@@ -118,12 +101,16 @@ data "aws_iam_policy_document" "this" {
     }
   }
 
-  # Allow creating policies needed by deployments
   statement {
-    sid       = "AllowCreatePolicies"
-    effect    = "Allow"
-    actions   = ["iam:CreatePolicy"]
-    resources = ["*"]
+    sid = "AllowPolicyUpdates"
+    effect = "Allow"
+    actions = [
+      "iam:CreatePolicy",
+      "iam:GetPolicy",
+      "iam:GetPolicyVersion",
+      "iam:TagPolicy",
+      "iam:DeletePolicyVersion"
+    ]
+    resources = [local.permissions_boundary_arn]
   }
-
 }

@@ -1,10 +1,8 @@
 
 locals {
-  deployment_role_name                         = "${var.prefix}-deployer"
-  project_guardrails_permissions_boundary_name = "${var.prefix}-project-guardrails"
-  project_boundary_arn                         = "arn:aws:iam::${var.account_id}:policy/${local.project_guardrails_permissions_boundary_name}"
-
+  deployment_role_name                         = "deployer-${var.prefix}"
+  project_boundary_arn = "arn:aws:iam::${var.account_id}:policy/pb-${var.prefix}-project-guardrails"
   # Common ARNs
-  prefixed_roles_arn = "arn:aws:iam::${var.account_id}:role/${var.prefix}-*"
-
+  prefixed_roles_arn       = "arn:aws:iam::${var.account_id}:role/deployer-*"
+  permissions_boundary_arn = "arn:aws:iam::${var.account_id}:policy/pb-*"
 }

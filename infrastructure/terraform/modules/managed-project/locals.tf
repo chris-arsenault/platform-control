@@ -1,6 +1,6 @@
 
 locals {
-  project_guardrails_permissions_boundary_name = "${var.prefix}-project-guardrails"
+  project_guardrails_permissions_boundary_name = "pb-${var.prefix}-project-guardrails"
   project_boundary_arn                         = "arn:aws:iam::${var.account_id}:policy/${local.project_guardrails_permissions_boundary_name}"
 
   # Common ARNs
