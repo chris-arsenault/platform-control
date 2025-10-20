@@ -37,7 +37,8 @@ data "aws_iam_policy_document" "this" {
       "iam:GetRole",
       "iam:ListAttachedRolePolicies",
       "iam:ListRolePolicies",
-      "iam:ListInstanceProfilesForRole"
+      "iam:ListInstanceProfilesForRole",
+      "iam:ListPolicyVersions"
     ]
     resources = [
       "arn:aws:iam::${var.account_id}:role/deployer-*",
@@ -76,7 +77,8 @@ data "aws_iam_policy_document" "this" {
       "iam:UntagRole",
       "iam:GetRole",
       "iam:ListAttachedRolePolicies",
-      "iam:ListRolePolicies"
+      "iam:ListRolePolicies",
+      "iam:ListPolicyVersions"
     ]
     resources = ["arn:aws:iam::${var.account_id}:role/${local.deployment_role_name}"]
   }
