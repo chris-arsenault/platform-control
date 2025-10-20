@@ -62,57 +62,10 @@ data "aws_iam_policy_document" "this" {
     resources = ["*"]
   }
 
-
-
-  statement {
-    sid    = "ManageSelfRolePolicy"
-    effect = "Allow"
-    actions = [
-      "iam:AttachRolePolicy",
-      "iam:DetachRolePolicy",
-      "iam:PutRolePolicy",
-      "iam:DeleteRolePolicy",
-      "iam:UpdateAssumeRolePolicy",
-      "iam:TagRole",
-      "iam:UntagRole",
-      "iam:GetRole",
-      "iam:ListAttachedRolePolicies",
-      "iam:ListRolePolicies",
-      "iam:ListPolicyVersions"
-    ]
-    resources = ["arn:aws:iam::${var.account_id}:role/${local.deployment_role_name}"]
-  }
-
   statement {
     sid       = "DenyDeleteSelf"
     effect    = "Deny"
     actions   = ["iam:DeleteRole"]
     resources = ["arn:aws:iam::${var.account_id}:role/${local.deployment_role_name}"]
-  }
-
-  # Allow setting only the approved boundary to prefixed roles
-  statement {
-    sid       = "AllowSetApprovedBoundary"
-    effect    = "Allow"
-    actions   = ["iam:PutRolePermissionsBoundary"]
-    resources = [local.prefixed_roles_arn]
-    condition {
-      test     = "StringEquals"
-      variable = "iam:PermissionsBoundary"
-      values   = [local.project_boundary_arn]
-    }
-  }
-
-  statement {
-    sid    = "AllowPolicyUpdates"
-    effect = "Allow"
-    actions = [
-      "iam:CreatePolicy",
-      "iam:GetPolicy",
-      "iam:GetPolicyVersion",
-      "iam:TagPolicy",
-      "iam:DeletePolicyVersion"
-    ]
-    resources = [local.permissions_boundary_arn]
   }
 }
