@@ -45,7 +45,6 @@ data "aws_iam_policy_document" "assume_role" {
 resource "aws_iam_role" "this" {
   name                 = "deployer-${var.prefix}"
   assume_role_policy   = data.aws_iam_policy_document.assume_role.json
-  permissions_boundary = aws_iam_policy.pb_project_guardrails.arn
   tags                 = local.tags
   path                 = "/${var.prefix}/"
 }
