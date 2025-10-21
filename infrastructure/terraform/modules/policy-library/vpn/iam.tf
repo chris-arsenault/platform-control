@@ -131,6 +131,7 @@ data "aws_iam_policy_document" "this" {
       "secretsmanager:CreateSecret",
       "secretsmanager:TagResource",
       "secretsmanager:DescribeSecret",
+      "secretsmanager:DeleteSecret",
       "secretsmanager:GetResourcePolicy"
     ]
     resources = ["arn:aws:secretsmanager:*:*:secret:${var.prefix}-*"]
