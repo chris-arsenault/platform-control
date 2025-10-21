@@ -17,7 +17,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    sid     = "CreateNamespacedEc2Resources"
+    sid = "CreateNamespacedEc2Resources"
     actions = [
       "ec2:CreateVpc",
       "ec2:CreateSubnet",
@@ -27,7 +27,7 @@ data "aws_iam_policy_document" "this" {
       "ec2:CreateNetworkInterface",
       "ec2:AllocateAddress",
       "ec2:RunInstances",
-      "ec2:CreateTags"        # first-tag after create
+      "ec2:CreateTags" # first-tag after create
     ]
     resources = ["*"]
 
@@ -40,14 +40,14 @@ data "aws_iam_policy_document" "this" {
 
   # Require ec2:ResourceTag/project for ops that reference existing resources
   statement {
-    sid     = "ManageOnlyNamespacedEc2Resources"
+    sid = "ManageOnlyNamespacedEc2Resources"
     actions = [
       "ec2:AttachInternetGateway",
-      "ec2:CreateRoute",            # route-table + target must be tagged
+      "ec2:CreateRoute", # route-table + target must be tagged
       "ec2:ReplaceRoute",
       "ec2:CreateNetworkInterface",
       "ec2:AttachNetworkInterface",
-      "ec2:AssociateRouteTable",    # route-table + subnet must be tagged
+      "ec2:AssociateRouteTable", # route-table + subnet must be tagged
       "ec2:DeleteVpc",
       "ec2:DeleteSubnet",
       "ec2:DeleteInternetGateway",
@@ -60,7 +60,7 @@ data "aws_iam_policy_document" "this" {
       "ec2:AuthorizeSecurityGroupEgress",
       "ec2:RevokeSecurityGroupIngress",
       "ec2:RevokeSecurityGroupEgress",
-      "ec2:AssociateAddress",       # EIP + ENI/instance must be tagged
+      "ec2:AssociateAddress", # EIP + ENI/instance must be tagged
       "ec2:DisassociateAddress",
       "ec2:ReleaseAddress",
       "ec2:CreateTags",
@@ -127,9 +127,10 @@ data "aws_iam_policy_document" "this" {
 
   statement {
     sid = "CreateSecretKeys"
-  actions = [
-    "secretsmanager:CreateSecret"
-  ]
+    actions = [
+      "secretsmanager:CreateSecret",
+      "secretsmanager:TagResource"
+    ]
     resources = ["arn:aws:secretsmanager:*:*:secret:${var.prefix}-*"]
   }
 }
