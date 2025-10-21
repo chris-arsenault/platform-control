@@ -19,6 +19,8 @@ data "aws_iam_policy_document" "this" {
   statement {
     sid = "CreateNamespacedEc2Resources"
     actions = [
+      "ec2:CreateSecurityGroup",
+      "ec2:CreateSubnet",
       "ec2:CreateVpc",
       "ec2:CreateInternetGateway",
       "ec2:CreateRouteTable",
@@ -54,6 +56,7 @@ data "aws_iam_policy_document" "this" {
     actions = [
       "ec2:CreateSecurityGroup",
       "ec2:CreateSubnet",
+      "ec2:CreateRouteTable",
       "ec2:DeleteVpc",
       "ec2:DeleteSubnet",
       "ec2:DeleteInternetGateway",
@@ -96,6 +99,7 @@ data "aws_iam_policy_document" "this" {
       "iam:AddRoleToInstanceProfile",
       "iam:RemoveRoleFromInstanceProfile",
       "iam:TagInstanceProfile",
+      "iam:UntagInstanceProfile",
       "iam:TagRole",
       "iam:UntagRole"
     ]
@@ -121,7 +125,8 @@ data "aws_iam_policy_document" "this" {
     actions = [
       "ssm:PutParameter",
       "ssm:DeleteParameter",
-      "ssm:AddTagsToResource"
+      "ssm:AddTagsToResource",
+      "ssm:RemoveTagsFromResource"
     ]
     resources = ["arn:aws:ssm:*:*:parameter/${var.prefix}/*"]
   }
