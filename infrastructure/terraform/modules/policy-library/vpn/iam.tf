@@ -8,6 +8,7 @@ data "aws_iam_policy_document" "this" {
       "iam:ListAttachedRolePolicies",
       "iam:GetInstanceProfile",
       "ssm:GetParameter",
+      "ssm:DescribeParameter",
       "ssm:GetParameters",
       "ssm:ListTagsForResource"
     ]
