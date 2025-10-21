@@ -31,7 +31,7 @@ data "aws_iam_policy_document" "this" {
     resources = ["*"]
 
     condition {
-      test     = "StringEquals"
+      test     = "StringEqualsIfExists"
       variable = "aws:RequestTag/project"
       values   = [var.prefix]
     }
