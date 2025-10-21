@@ -124,4 +124,12 @@ data "aws_iam_policy_document" "this" {
     ]
     resources = ["arn:aws:ssm:*:*:parameter/${var.prefix}/*"]
   }
+
+  statement {
+    sid = "CreateSecretKeys"
+  actions = [
+    "secretsmanager:CreateSecret"
+  ]
+    resources = ["arn:aws:secretsmanager:*:*:secret:${var.prefix}-*"]
+  }
 }
