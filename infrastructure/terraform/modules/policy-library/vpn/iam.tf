@@ -94,6 +94,7 @@ data "aws_iam_policy_document" "this" {
       "iam:DeleteInstanceProfile",
       "iam:AddRoleToInstanceProfile",
       "iam:RemoveRoleFromInstanceProfile",
+      "iam:TagInstanceProfile",
       "iam:TagRole",
       "iam:UntagRole"
     ]
