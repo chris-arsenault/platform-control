@@ -17,18 +17,16 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    sid = "CreateNamespacedEc2Resources"
+    sid     = "CreateNamespacedEc2Resources"
     actions = [
-      "ec2:CreateSecurityGroup",
-      "ec2:CreateSubnet",
       "ec2:CreateVpc",
+      "ec2:CreateSubnet",
       "ec2:CreateInternetGateway",
       "ec2:CreateRouteTable",
-      "ec2:CreateRoute",
-      "ec2:AssociateRouteTable",
+      "ec2:CreateSecurityGroup",
       "ec2:AllocateAddress",
-      "ec2:AssociateAddress",
-      "ec2:RunInstances"
+      "ec2:RunInstances",
+      "ec2:CreateTags"        # first-tag after create
     ]
     resources = ["*"]
 
@@ -37,26 +35,15 @@ data "aws_iam_policy_document" "this" {
       variable = "aws:RequestTag/project"
       values   = [var.prefix]
     }
-
   }
 
+  # Require ec2:ResourceTag/project for ops that reference existing resources
   statement {
-    sid     = "TagNewEc2ResourcesIntoNamespace"
-    actions = ["ec2:CreateTags"]
-    resources = ["*"]
-    condition {
-      test     = "StringEquals"
-      variable = "aws:RequestTag/project"
-      values   = [var.prefix]
-    }
-  }
-
-  statement {
-    sid = "ManageOnlyNamespacedEc2Resources"
+    sid     = "ManageOnlyNamespacedEc2Resources"
     actions = [
-      "ec2:CreateSecurityGroup",
-      "ec2:CreateSubnet",
-      "ec2:CreateRouteTable",
+      "ec2:AttachInternetGateway",
+      "ec2:CreateRoute",            # route-table + target must be tagged
+      "ec2:AssociateRouteTable",    # route-table + subnet must be tagged
       "ec2:DeleteVpc",
       "ec2:DeleteSubnet",
       "ec2:DeleteInternetGateway",
@@ -67,16 +54,17 @@ data "aws_iam_policy_document" "this" {
       "ec2:DeleteSecurityGroup",
       "ec2:AuthorizeSecurityGroupIngress",
       "ec2:AuthorizeSecurityGroupEgress",
-      "ec2:AttachInternetGateway",
       "ec2:RevokeSecurityGroupIngress",
       "ec2:RevokeSecurityGroupEgress",
+      "ec2:AssociateAddress",       # EIP + ENI/instance must be tagged
+      "ec2:DisassociateAddress",
+      "ec2:ReleaseAddress",
       "ec2:CreateTags",
       "ec2:DeleteTags",
-      "ec2:ReleaseAddress",
-      "ec2:DisassociateAddress",
       "ec2:TerminateInstances",
       "ec2:ModifyInstanceAttribute",
-      "ec2:ModifyVpcAttribute"
+      "ec2:ModifyVpcAttribute",
+      "ec2:ModifySubnetAttribute"
     ]
     resources = ["*"]
 
