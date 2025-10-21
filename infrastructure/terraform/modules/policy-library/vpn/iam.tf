@@ -72,7 +72,8 @@ data "aws_iam_policy_document" "this" {
       "ec2:ReleaseAddress",
       "ec2:DisassociateAddress",
       "ec2:TerminateInstances",
-      "ec2:ModifyInstanceAttribute"
+      "ec2:ModifyInstanceAttribute",
+      "ec2:ModifyVpcAttribute"
     ]
     resources = ["*"]
 
