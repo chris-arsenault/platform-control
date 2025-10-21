@@ -9,6 +9,7 @@ data "aws_iam_policy_document" "this" {
       "iam:GetInstanceProfile",
       "ssm:GetParameter",
       "ssm:DescribeParameter",
+      "ssm:DescribeParameters",
       "ssm:GetParameters",
       "ssm:ListTagsForResource"
     ]
