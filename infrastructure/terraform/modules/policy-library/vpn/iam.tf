@@ -129,7 +129,8 @@ data "aws_iam_policy_document" "this" {
     sid = "CreateSecretKeys"
     actions = [
       "secretsmanager:CreateSecret",
-      "secretsmanager:TagResource"
+      "secretsmanager:TagResource",
+      "secretsmanager:DescribeSecret"
     ]
     resources = ["arn:aws:secretsmanager:*:*:secret:${var.prefix}-*"]
   }
