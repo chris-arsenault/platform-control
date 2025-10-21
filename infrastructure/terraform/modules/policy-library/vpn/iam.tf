@@ -44,7 +44,9 @@ data "aws_iam_policy_document" "this" {
     actions = [
       "ec2:AttachInternetGateway",
       "ec2:CreateRoute",            # route-table + target must be tagged
+      "ec2:ReplaceRoute",
       "ec2:CreateNetworkInterface",
+      "ec2:AttachNetworkInterface",
       "ec2:AssociateRouteTable",    # route-table + subnet must be tagged
       "ec2:DeleteVpc",
       "ec2:DeleteSubnet",
