@@ -35,10 +35,21 @@ data "aws_iam_policy_document" "this" {
 
     condition {
       test     = "StringEquals"
-      variable = "aws:RequestTag/namespace"
+      variable = "aws:RequestTag/project"
       values   = [var.prefix]
     }
 
+  }
+
+  statement {
+    sid     = "TagNewEc2ResourcesIntoNamespace"
+    actions = ["ec2:CreateTags"]
+    resources = ["*"]
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestTag/project"
+      values   = [var.prefix]
+    }
   }
 
   statement {
@@ -67,7 +78,7 @@ data "aws_iam_policy_document" "this" {
 
     condition {
       test     = "StringEquals"
-      variable = "aws:ResourceTag/namespace"
+      variable = "aws:ResourceTag/project"
       values   = [var.prefix]
     }
   }
@@ -93,7 +104,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    sid       = "PassNamespacedRolesToEc2"
+    sid       = "PassprojectdRolesToEc2"
     actions   = ["iam:PassRole"]
     resources = ["arn:aws:iam::*:role/${var.prefix}-*"]
     condition {
