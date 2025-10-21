@@ -20,13 +20,10 @@ data "aws_iam_policy_document" "this" {
     sid = "CreateNamespacedEc2Resources"
     actions = [
       "ec2:CreateVpc",
-      "ec2:CreateSubnet",
       "ec2:CreateInternetGateway",
-      "ec2:AttachInternetGateway",
       "ec2:CreateRouteTable",
       "ec2:CreateRoute",
       "ec2:AssociateRouteTable",
-      "ec2:CreateSecurityGroup",
       "ec2:AllocateAddress",
       "ec2:AssociateAddress",
       "ec2:RunInstances"
@@ -55,6 +52,8 @@ data "aws_iam_policy_document" "this" {
   statement {
     sid = "ManageOnlyNamespacedEc2Resources"
     actions = [
+      "ec2:CreateSecurityGroup",
+      "ec2:CreateSubnet",
       "ec2:DeleteVpc",
       "ec2:DeleteSubnet",
       "ec2:DeleteInternetGateway",
@@ -65,6 +64,7 @@ data "aws_iam_policy_document" "this" {
       "ec2:DeleteSecurityGroup",
       "ec2:AuthorizeSecurityGroupIngress",
       "ec2:AuthorizeSecurityGroupEgress",
+      "ec2:AttachInternetGateway",
       "ec2:RevokeSecurityGroupIngress",
       "ec2:RevokeSecurityGroupEgress",
       "ec2:CreateTags",
