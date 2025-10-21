@@ -24,6 +24,7 @@ data "aws_iam_policy_document" "this" {
       "ec2:CreateInternetGateway",
       "ec2:CreateRouteTable",
       "ec2:CreateSecurityGroup",
+      "ec2:CreateNetworkInterface",
       "ec2:AllocateAddress",
       "ec2:RunInstances",
       "ec2:CreateTags"        # first-tag after create
