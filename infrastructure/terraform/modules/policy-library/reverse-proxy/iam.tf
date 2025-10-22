@@ -18,10 +18,6 @@ data "aws_iam_policy_document" "this" {
       "elasticloadbalancing:DeleteLoadBalancer",
       "elasticloadbalancing:DeleteTargetGroup",
       "elasticloadbalancing:DeregisterTargets",
-      "elasticloadbalancing:DescribeListenerCertificates",
-      "elasticloadbalancing:DescribeListeners",
-      "elasticloadbalancing:DescribeLoadBalancers",
-      "elasticloadbalancing:DescribeTargetGroups",
       "elasticloadbalancing:ModifyListener",
       "elasticloadbalancing:ModifyLoadBalancerAttributes",
       "elasticloadbalancing:ModifyTargetGroup",
@@ -43,8 +39,6 @@ data "aws_iam_policy_document" "this" {
   statement {
     sid = "ReadAlb"
     actions = [
-      "elasticloadbalancing:Describe*",
-      "elasticloadbalancing:Get*",
       "elasticloadbalancing:SetWebACL",
     ]
     resources = [
@@ -65,7 +59,6 @@ data "aws_iam_policy_document" "this" {
       "iam:RemoveRoleFromInstanceProfile",
       "iam:TagRole",
       "iam:UntagRole",
-      "iam:PassRole"
     ]
     resources = [
       "arn:aws:iam::*:role/${var.prefix}-*",
@@ -74,11 +67,26 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
+    sid    = "IamPassOnlyLambdaExecRoleToLambda"
+    effect = "Allow"
+    actions = [
+      "iam:PassRole"
+    ]
+    resources = [
+      "arn:aws:iam::*:role/${var.prefix}-*",
+    ]
+    condition {
+      test     = "StringLike"
+      values   = ["ec2.amazonaws.com"]
+      variable = "iam:PassedToService"
+    }
+  }
+
+  statement {
     sid = "ManageWaf"
     actions = [
       "wafv2:CreateWebACL",
       "wafv2:DeleteWebACL",
-      "wafv2:GetWebACL",
       "wafv2:ListTagsForResource",
       "wafv2:TagResource",
       "wafv2:UntagResource",
@@ -95,7 +103,6 @@ data "aws_iam_policy_document" "this" {
     actions = [
       "wafv2:AssociateWebACL",
       "wafv2:DisassociateWebACL",
-      "wafv2:Get*",
     ]
     resources = ["*"]
   }
@@ -105,9 +112,6 @@ data "aws_iam_policy_document" "this" {
     actions = [
       "acm:AddTagsToCertificate",
       "acm:DeleteCertificate",
-      "acm:DescribeCertificate",
-      "acm:GetCertificate",
-      "acm:ListTagsForCertificate",
       "acm:RemoveTagsFromCertificate",
       "acm:RequestCertificate",
       "acm:UpdateCertificateOptions"
@@ -119,21 +123,9 @@ data "aws_iam_policy_document" "this" {
     sid = "ManageRoute53ForProxy"
     actions = [
       "route53:ChangeResourceRecordSets",
-      "route53:GetHostedZone",
     ]
     resources = [
       "arn:aws:route53:::hostedzone/*"
-    ]
-  }
-
-  statement {
-    sid = "ListRoute53"
-    actions = [
-      "route53:List*",
-      "route53:Get*",
-    ]
-    resources = [
-      "*"
     ]
   }
 
@@ -195,8 +187,6 @@ data "aws_iam_policy_document" "this" {
     actions = [
       "cognito-idp:CreateUserPoolDomain",
       "cognito-idp:DeleteUserPoolDomain",
-      "cognito-idp:Get*",
-      "cognito-idp:Describe*"
     ]
     resources = ["*"]
   }
