@@ -83,7 +83,8 @@ data "aws_iam_policy_document" "this" {
       "wafv2:UpdateWebACL"
     ]
     resources = [
-      "arn:aws:wafv2:*:${var.account_id}:regional/webacl/${var.prefix}-*/*"
+      "arn:aws:wafv2:*:${var.account_id}:regional/webacl/${var.prefix}-*/*",
+      "arn:aws:wafv2:*:${var.account_id}:regional/managedruleset/*/"
     ]
   }
 
@@ -178,8 +179,6 @@ data "aws_iam_policy_document" "this" {
       "cognito-idp:UpdateGroup",
       "cognito-idp:UpdateUserPool",
       "cognito-idp:UpdateUserPoolClient",
-      "cognito-idp:Get*",
-      "cognito-idp:Describe*"
     ]
     resources = [
       "arn:aws:cognito-idp:*:${var.account_id}:userpool/*",
@@ -192,7 +191,9 @@ data "aws_iam_policy_document" "this" {
     sid = "ManageCognitoDomains"
     actions = [
       "cognito-idp:CreateUserPoolDomain",
-      "cognito-idp:DeleteUserPoolDomain"
+      "cognito-idp:DeleteUserPoolDomain",
+      "cognito-idp:Get*",
+      "cognito-idp:Describe*"
     ]
     resources = ["*"]
   }

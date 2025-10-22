@@ -72,7 +72,8 @@ data "aws_iam_policy_document" "this" {
       "ec2:ModifyVpcAttribute",
       "ec2:ModifySubnetAttribute",
       "ec2:ModifyNetworkInterfaceAttribute",
-      "ec2:StopInstances"
+      "ec2:StopInstances",
+      "ec2:DeleteNetworkInterface"
     ]
     resources = ["*"]
 
