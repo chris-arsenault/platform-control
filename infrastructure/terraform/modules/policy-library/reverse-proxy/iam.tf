@@ -179,13 +179,13 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    sid = "CreateReverseProxyInstanceProfile"
-    actions = ["iam:CreateInstanceProfile"]
+    sid       = "CreateReverseProxyInstanceProfile"
+    actions   = ["iam:CreateInstanceProfile"]
     resources = ["*"]
     condition {
       test     = "StringLike"
       variable = "iam:InstanceProfileName"
-      values = ["${var.prefix}-*"]
+      values   = ["${var.prefix}-*"]
     }
   }
 }
