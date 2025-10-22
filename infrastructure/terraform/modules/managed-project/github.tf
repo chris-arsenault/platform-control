@@ -21,12 +21,3 @@ resource "github_actions_secret" "prefix" {
   secret_name     = "PREFIX"
   plaintext_value = var.prefix
 }
-
-
-resource "github_actions_secret" "pb_arn" {
-  for_each = var.allowed_repos
-
-  repository      = each.value
-  secret_name     = "PB_ARN"
-  plaintext_value = aws_iam_policy.pb_project_guardrails.arn
-}

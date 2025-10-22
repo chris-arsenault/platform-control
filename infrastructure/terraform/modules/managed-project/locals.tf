@@ -6,6 +6,7 @@ locals {
   # Common ARNs
   all_roles_arn_prefix = "arn:aws:iam::${var.account_id}:role"
   prefixed_roles_arn   = "arn:aws:iam::${var.account_id}:role/${var.prefix}-*"
+  deployer_roles_arn   = "arn:aws:iam::${var.account_id}:role/deployer-*"
   all_policies_arn     = "arn:aws:iam::${var.account_id}:policy/*"
   all_users_arn        = "arn:aws:iam::${var.account_id}:user/*"
   all_groups_arn       = "arn:aws:iam::${var.account_id}:group/*"
