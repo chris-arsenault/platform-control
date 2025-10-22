@@ -120,7 +120,8 @@ data "aws_iam_policy_document" "this" {
       "cloudfront:GetDistribution",
       "cloudfront:TagResource",
       "cloudfront:UntagResource",
-      "cloudfront:UpdateDistribution"
+      "cloudfront:UpdateDistribution",
+      "cloudfront:ListOriginRequestPolicies"
     ]
     resources = [
       "arn:aws:cloudfront::${var.account_id}:distribution/*"
