@@ -105,7 +105,7 @@ data "aws_iam_policy_document" "this" {
     actions = [
       "route53:ChangeResourceRecordSets",
       "route53:GetHostedZone",
-      "route53:ListResourceRecordSets"
+      "route53:List*"
     ]
     resources = [
       "arn:aws:route53:::hostedzone/*"
@@ -121,7 +121,7 @@ data "aws_iam_policy_document" "this" {
       "cloudfront:TagResource",
       "cloudfront:UntagResource",
       "cloudfront:UpdateDistribution",
-      "cloudfront:ListOriginRequestPolicies"
+      "cloudfront:List*"
     ]
     resources = [
       "arn:aws:cloudfront::${var.account_id}:distribution/*"
