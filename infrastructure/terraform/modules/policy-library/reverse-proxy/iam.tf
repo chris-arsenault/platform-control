@@ -41,6 +41,17 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
+    sid = "ReadAlb"
+    actions = [
+      "elasticloadbalancing:Describe*",
+      "elasticloadbalancing:Get*",
+    ]
+    resources = [
+      "arn:aws:elasticloadbalancing:*:${var.account_id}:*"
+    ]
+  }
+
+  statement {
     sid = "ManageIamForInstanceProfiles"
     actions = [
       "iam:CreateRole",
@@ -115,6 +126,7 @@ data "aws_iam_policy_document" "this" {
     sid = "ListRoute53"
     actions = [
       "route53:List*",
+      "route53:Get*",
     ]
     resources = [
       "*"
