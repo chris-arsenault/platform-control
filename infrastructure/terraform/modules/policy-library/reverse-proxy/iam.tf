@@ -194,7 +194,8 @@ data "aws_iam_policy_document" "this" {
   statement {
     sid = "EC2Perms"
     actions = [
-      "ec2:CreateNatGateway"
+      "ec2:CreateNatGateway",
+      "ec2:DeleteNatGateway"
     ]
     resources = ["*"]
   }
