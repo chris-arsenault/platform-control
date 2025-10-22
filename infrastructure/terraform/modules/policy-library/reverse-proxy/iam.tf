@@ -130,16 +130,17 @@ data "aws_iam_policy_document" "this" {
       "cloudfront:TagResource",
       "cloudfront:UntagResource",
       "cloudfront:UpdateDistribution",
-    ]
-    resources = [
-      "arn:aws:cloudfront::${var.account_id}:distribution/*"
-    ]
-  }
-
-  statement {
-    sid = "ListCloudfrontResources"
-    actions = [
-      "cloudfront:List*"
+      "cloudfront:List*",
+      "cloudfront:Get*",
+      "cloudfront:CreateOriginAccessControl",
+      "cloudfront:UpdateOriginAccessControl",
+      "cloudfront:DeleteOriginAccessControl",
+      "cloudfront:CreateCachePolicy",
+      "cloudfront:UpdateCachePolicy",
+      "cloudfront:DeleteCachePolicy",
+      "cloudfront:CreateOriginRequestPolicy",
+      "cloudfront:UpdateOriginRequestPolicy",
+      "cloudfront:DeleteOriginRequestPolicy",
     ]
     resources = [
       "arn:aws:cloudfront::${var.account_id}:*"
