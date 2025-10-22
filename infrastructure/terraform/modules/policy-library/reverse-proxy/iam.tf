@@ -45,6 +45,7 @@ data "aws_iam_policy_document" "this" {
     actions = [
       "elasticloadbalancing:Describe*",
       "elasticloadbalancing:Get*",
+      "elasticloadbalancing:SetWebACL",
     ]
     resources = [
       "*"
@@ -199,6 +200,14 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
+    sid = "EC2Perms"
+    actions = [
+      "ec2:CreateNatGateway"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
     sid = "ManageIdentityPools"
     actions = [
       "cognito-identity:CreateIdentityPool",
@@ -206,7 +215,9 @@ data "aws_iam_policy_document" "this" {
       "cognito-identity:DescribeIdentityPool",
       "cognito-identity:GetIdentityPoolRoles",
       "cognito-identity:SetIdentityPoolRoles",
-      "cognito-identity:UpdateIdentityPool"
+      "cognito-identity:UpdateIdentityPool",
+      "cognito-identity:TagResource",
+      "cognito-identity:UntagResource"
     ]
     resources = [
       "arn:aws:cognito-identity:*:${var.account_id}:identitypool/*"
