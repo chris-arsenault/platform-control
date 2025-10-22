@@ -22,6 +22,12 @@ module "iam" {
   account_id = var.account_id
 }
 
+module "reverse-proxy" {
+  source     = "../policy-library/reverse-proxy"
+  prefix     = var.prefix
+  account_id = var.account_id
+}
+
 module "state" {
   source     = "../policy-library/state"
   prefix     = var.prefix
