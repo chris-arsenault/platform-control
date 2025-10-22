@@ -64,7 +64,8 @@ data "aws_iam_policy_document" "this" {
       "iam:AddRoleToInstanceProfile",
       "iam:RemoveRoleFromInstanceProfile",
       "iam:TagRole",
-      "iam:UntagRole"
+      "iam:UntagRole",
+      "iam:PassRole"
     ]
     resources = [
       "arn:aws:iam::*:role/${var.prefix}-*",
@@ -78,6 +79,7 @@ data "aws_iam_policy_document" "this" {
       "wafv2:CreateWebACL",
       "wafv2:DeleteWebACL",
       "wafv2:GetWebACL",
+      "wafv2:GetWebACLForResource",
       "wafv2:ListTagsForResource",
       "wafv2:TagResource",
       "wafv2:UntagResource",
