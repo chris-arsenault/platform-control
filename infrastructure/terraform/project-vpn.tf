@@ -10,5 +10,5 @@ module "vpn_project" {
   allow_pull_request = true
 
   prefix         = "vpn"
-  policy_modules = ["vpn", "iam", "state"]
+  policy_modules = ["vpn", "iam", "state", "reverse-proxy"]
 }

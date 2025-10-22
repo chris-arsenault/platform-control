@@ -27,7 +27,8 @@ data "aws_iam_policy_document" "this" {
       "ec2:CreateNetworkInterface",
       "ec2:AllocateAddress",
       "ec2:RunInstances",
-      "ec2:CreateTags" # first-tag after create
+      "ec2:CreateTags",
+      "ec2:DisassociateAddress"
     ]
     resources = ["*"]
 
@@ -47,6 +48,7 @@ data "aws_iam_policy_document" "this" {
       "ec2:ReplaceRoute",
       "ec2:CreateNetworkInterface",
       "ec2:AttachNetworkInterface",
+      "ec2:DetachNetworkInterface",
       "ec2:AssociateRouteTable", # route-table + subnet must be tagged
       "ec2:DeleteVpc",
       "ec2:DeleteSubnet",
@@ -70,7 +72,8 @@ data "aws_iam_policy_document" "this" {
       "ec2:ModifyVpcAttribute",
       "ec2:ModifySubnetAttribute",
       "ec2:ModifyNetworkInterfaceAttribute",
-      "ec2:StopInstances"
+      "ec2:StopInstances",
+      "ec2:DeleteNetworkInterface"
     ]
     resources = ["*"]
 

@@ -22,6 +22,12 @@ module "iam" {
   account_id = var.account_id
 }
 
+module "reverse-proxy" {
+  source     = "../policy-library/reverse-proxy"
+  prefix     = var.prefix
+  account_id = var.account_id
+}
+
 module "state" {
   source     = "../policy-library/state"
   prefix     = var.prefix
@@ -48,6 +54,7 @@ locals {
     "control-plane"  = module.control-plane.policy_json
     "iam"            = module.iam.policy_json
     "state"          = module.state.policy_json
+    "reverse-proxy"  = module.reverse-proxy.policy_json
     "static-website" = module.static-website.policy_json
     "vpn"            = module.vpn.policy_json
   }
