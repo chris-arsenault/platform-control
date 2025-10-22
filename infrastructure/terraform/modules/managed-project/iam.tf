@@ -55,3 +55,8 @@ resource "aws_iam_role_policy" "inline_modules" {
   name     = each.value
   policy   = local.policy_map[each.value]
 }
+
+resource "aws_iam_role_policy_attachment" "read_only" {
+  role = aws_iam_role.this.id
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
+}
