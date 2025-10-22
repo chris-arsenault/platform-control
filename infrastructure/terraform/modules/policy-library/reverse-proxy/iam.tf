@@ -177,7 +177,9 @@ data "aws_iam_policy_document" "this" {
       "cognito-idp:UntagResource",
       "cognito-idp:UpdateGroup",
       "cognito-idp:UpdateUserPool",
-      "cognito-idp:UpdateUserPoolClient"
+      "cognito-idp:UpdateUserPoolClient",
+      "cognito-idp:Get*",
+      "cognito-idp:Describe*"
     ]
     resources = [
       "arn:aws:cognito-idp:*:${var.account_id}:userpool/*",
