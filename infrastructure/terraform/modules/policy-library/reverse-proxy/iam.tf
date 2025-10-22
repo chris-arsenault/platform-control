@@ -79,7 +79,6 @@ data "aws_iam_policy_document" "this" {
       "wafv2:CreateWebACL",
       "wafv2:DeleteWebACL",
       "wafv2:GetWebACL",
-      "wafv2:GetWebACLForResource",
       "wafv2:ListTagsForResource",
       "wafv2:TagResource",
       "wafv2:UntagResource",
@@ -95,7 +94,8 @@ data "aws_iam_policy_document" "this" {
     sid = "AssociateWaf"
     actions = [
       "wafv2:AssociateWebACL",
-      "wafv2:DisassociateWebACL"
+      "wafv2:DisassociateWebACL",
+      "wafv2:Get*",
     ]
     resources = ["*"]
   }
