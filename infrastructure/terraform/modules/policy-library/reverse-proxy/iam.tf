@@ -47,7 +47,7 @@ data "aws_iam_policy_document" "this" {
       "elasticloadbalancing:Get*",
     ]
     resources = [
-      "arn:aws:elasticloadbalancing:*:${var.account_id}:*"
+      "*"
     ]
   }
 
@@ -84,7 +84,7 @@ data "aws_iam_policy_document" "this" {
     ]
     resources = [
       "arn:aws:wafv2:*:${var.account_id}:regional/webacl/${var.prefix}-*/*",
-      "arn:aws:wafv2:*:${var.account_id}:regional/managedruleset/*/"
+      "arn:aws:wafv2:*:${var.account_id}:regional/managedruleset/*/*"
     ]
   }
 
