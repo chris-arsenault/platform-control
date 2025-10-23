@@ -32,7 +32,9 @@ data "aws_iam_policy_document" "this" {
     resources = [
       "arn:aws:elasticloadbalancing:*:${var.account_id}:loadbalancer/app/${var.prefix}-*",
       "arn:aws:elasticloadbalancing:*:${var.account_id}:listener/app/${var.prefix}-*/*/*",
-      "arn:aws:elasticloadbalancing:*:${var.account_id}:targetgroup/${var.prefix}-*/*"
+      "arn:aws:elasticloadbalancing:*:${var.account_id}:targetgroup/${var.prefix}-*/*",
+      "arn:aws:elasticloadbalancing:*:${var.account_id}:loadbalancer/net/${var.prefix}-*",
+      "arn:aws:elasticloadbalancing:*:${var.account_id}:listener/net/${var.prefix}-*/*/*",
     ]
   }
 
@@ -215,6 +217,16 @@ data "aws_iam_policy_document" "this" {
     ]
     resources = [
       "arn:aws:cognito-identity:*:${var.account_id}:identitypool/*"
+    ]
+  }
+
+  statement {
+    sid = "ManageCloudwatch"
+    actions = [
+      "logs:CreateLogGroup"
+    ]
+    resources = [
+      "arn:aws:logs:us-east-1:559098897826:log-group:/aws/${var.prefix}/*"
     ]
   }
 
