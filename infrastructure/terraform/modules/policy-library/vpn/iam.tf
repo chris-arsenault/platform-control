@@ -2,7 +2,6 @@ data "aws_iam_policy_document" "this" {
   statement {
     sid = "AllowDescribesAndReads"
     actions = [
-      "ec2:Describe*",
       "iam:GetRole",
       "iam:ListInstanceProfiles",
       "iam:ListAttachedRolePolicies",
@@ -14,6 +13,14 @@ data "aws_iam_policy_document" "this" {
       "ssm:ListTagsForResource"
     ]
     resources = ["*"]
+  }
+
+  statement {
+    sid = "AllowAutoscaling"
+    actions = [
+      "autoscaling:CreateAutoScalingGroup",
+    ]
+    resources = ["arn:aws:autoscaling:us-east-1:${var.account_id}:autoScalingGroup:*:autoScalingGroupName/${var.prefix}-"]
   }
 
   statement {
