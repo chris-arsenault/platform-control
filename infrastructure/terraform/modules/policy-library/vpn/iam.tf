@@ -19,7 +19,8 @@ data "aws_iam_policy_document" "this" {
     sid = "AllowAutoscaling"
     actions = [
       "autoscaling:CreateAutoScalingGroup",
-      "autoscaling:UpdateAutoScalingGroup"
+      "autoscaling:UpdateAutoScalingGroup",
+      "autoscaling:StartInstanceRefresh"
     ]
     resources = ["*"]
   }
