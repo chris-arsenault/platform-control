@@ -85,7 +85,8 @@ data "aws_iam_policy_document" "this" {
       "ec2:ModifyNetworkInterfaceAttribute",
       "ec2:StopInstances",
       "ec2:DeleteNetworkInterface",
-      "ec2:CreateLaunchTemplateVersion"
+      "ec2:CreateLaunchTemplateVersion",
+      "ec2:DetachNetworkInterface"
     ]
     resources = ["*"]
 
