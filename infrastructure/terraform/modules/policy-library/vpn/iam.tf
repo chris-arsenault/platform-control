@@ -115,6 +115,16 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
+    sid = "AllowServiceLinkedRoles"
+    actions = [
+      "iam:CreateServiceLinkedRole"
+    ]
+    resources = [
+      "arn:aws:iam::${var.account_id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+    ]
+  }
+
+  statement {
     sid       = "PassprojectdRolesToEc2"
     actions   = ["iam:PassRole"]
     resources = ["arn:aws:iam::*:role/${var.prefix}-*"]
