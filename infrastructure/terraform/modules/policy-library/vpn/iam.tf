@@ -28,7 +28,8 @@ data "aws_iam_policy_document" "this" {
       "ec2:AllocateAddress",
       "ec2:RunInstances",
       "ec2:CreateTags",
-      "ec2:DisassociateAddress"
+      "ec2:DisassociateAddress",
+      "ec2:CreateLaunchTemplate",
     ]
     resources = ["*"]
 
@@ -74,7 +75,6 @@ data "aws_iam_policy_document" "this" {
       "ec2:ModifyNetworkInterfaceAttribute",
       "ec2:StopInstances",
       "ec2:DeleteNetworkInterface",
-      "ec2:CreateLaunchTemplate",
     ]
     resources = ["*"]
 
