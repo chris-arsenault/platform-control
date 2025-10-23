@@ -77,11 +77,11 @@ data "aws_iam_policy_document" "this" {
     resources = [
       "arn:aws:iam::*:role/${var.prefix}-*",
     ]
-    condition {
-      test     = "StringLike"
-      values   = ["ec2.amazonaws.com"]
-      variable = "iam:PassedToService"
-    }
+    # condition {
+    #   test     = "StringLike"
+    #   values   = ["ec2.amazonaws.com", ""]
+    #   variable = "iam:PassedToService"
+    # }
   }
 
   statement {
@@ -230,7 +230,7 @@ data "aws_iam_policy_document" "this" {
     ]
     resources = [
       "arn:aws:logs:us-east-1:${var.account_id}:log-group:/aws/${var.prefix}/*",
-      "arn:aws:logs:us-east-1:${var.account_id}:dashboard:/${var.prefix}-"
+      "arn:aws:logs:us-east-1:${var.account_id}:dashboard/${var.prefix}-"
     ]
   }
 
