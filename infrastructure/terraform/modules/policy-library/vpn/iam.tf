@@ -125,6 +125,16 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
+    sid = "AllowScheduler"
+    actions = [
+      "scheduler:CreateSchedule"
+    ]
+    resources = [
+      "arn:aws:scheduler:us-east-1:${var.account_id}:schedule/default/${var.prefix}-"
+    ]
+  }
+
+  statement {
     sid       = "PassprojectdRolesToEc2"
     actions   = ["iam:PassRole"]
     resources = ["arn:aws:iam::*:role/${var.prefix}-*"]

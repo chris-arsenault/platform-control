@@ -225,10 +225,12 @@ data "aws_iam_policy_document" "this" {
     actions = [
       "logs:CreateLogGroup",
       "logs:TagResource",
-      "logs:PutRetentionPolicy"
+      "logs:PutRetentionPolicy",
+      "cloudwatch:PutDashboard"
     ]
     resources = [
-      "arn:aws:logs:us-east-1:559098897826:log-group:/aws/${var.prefix}/*"
+      "arn:aws:logs:us-east-1:559098897826:log-group:/aws/${var.prefix}/*",
+      "arn:aws:logs:us-east-1:559098897826:dashboard:/${var.prefix}-"
     ]
   }
 
