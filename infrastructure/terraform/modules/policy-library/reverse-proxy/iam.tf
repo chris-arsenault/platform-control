@@ -174,6 +174,7 @@ data "aws_iam_policy_document" "this" {
       "cognito-idp:UpdateGroup",
       "cognito-idp:UpdateUserPool",
       "cognito-idp:UpdateUserPoolClient",
+      "cognito-idp:SetUICustomization"
     ]
     resources = [
       "arn:aws:cognito-idp:*:${var.account_id}:userpool/*",
