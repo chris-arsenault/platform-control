@@ -130,7 +130,7 @@ data "aws_iam_policy_document" "this" {
       "scheduler:CreateSchedule"
     ]
     resources = [
-      "arn:aws:scheduler:us-east-1:${var.account_id}:schedule/default/${var.prefix}-"
+      "*"
     ]
   }
 
