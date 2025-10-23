@@ -230,7 +230,7 @@ data "aws_iam_policy_document" "this" {
     ]
     resources = [
       "arn:aws:logs:us-east-1:${var.account_id}:log-group:/aws/${var.prefix}/*",
-      "arn:aws:cloudwatch::${var.account_id}:dashboard/${var.prefix}-"
+      "*",
     ]
   }
 
