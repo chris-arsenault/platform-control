@@ -224,7 +224,8 @@ data "aws_iam_policy_document" "this" {
     sid = "ManageCloudwatch"
     actions = [
       "logs:CreateLogGroup",
-      "logs:TagResource"
+      "logs:TagResource",
+      "logs:PutRetentionPolicy"
     ]
     resources = [
       "arn:aws:logs:us-east-1:559098897826:log-group:/aws/${var.prefix}/*"
