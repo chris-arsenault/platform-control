@@ -20,7 +20,7 @@ data "aws_iam_policy_document" "this" {
     actions = [
       "autoscaling:CreateAutoScalingGroup",
     ]
-    resources = ["arn:aws:autoscaling:us-east-1:${var.account_id}:autoScalingGroup:*:autoScalingGroupName/${var.prefix}-"]
+    resources = ["*"]
   }
 
   statement {
