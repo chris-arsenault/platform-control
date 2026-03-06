@@ -46,6 +46,12 @@ module "vpn" {
   account_id = var.account_id
 }
 
+module "platform-services" {
+  source     = "../policy-library/platform-services"
+  prefix     = var.prefix
+  account_id = var.account_id
+}
+
 
 locals {
   policy_map = {
@@ -56,6 +62,7 @@ locals {
     "state"          = module.state.policy_json
     "reverse-proxy"  = module.reverse-proxy.policy_json
     "static-website" = module.static-website.policy_json
-    "vpn"            = module.vpn.policy_json
+    "vpn"              = module.vpn.policy_json
+    "platform-services" = module.platform-services.policy_json
   }
 }
