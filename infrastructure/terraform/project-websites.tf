@@ -9,8 +9,9 @@ module "project_websites" {
   allowed_branches   = ["main"]
   allow_pull_request = true
 
-  prefix = "websites"
-  policy_modules = [
+  prefix           = "websites"
+  state_key_prefix = "projects/websites"
+  policy_modules   = [
     "state",
     "api",
     "bedrock",

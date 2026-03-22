@@ -30,6 +30,11 @@ variable "policy_modules" {
   default     = []
 }
 
+variable "state_key_prefix" {
+  description = "S3 key prefix for this project's state files (e.g. platform, projects/svap)"
+  type        = string
+}
+
 variable "tags" {
   description = "Tags to apply to the role"
   type        = map(string)

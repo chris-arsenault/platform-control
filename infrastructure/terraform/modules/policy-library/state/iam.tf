@@ -1,29 +1,29 @@
 locals {
-  state_bucket = "tf-state-${var.prefix}-${var.account_id}"
-  state_table  = "tf-lock-${var.prefix}-${var.account_id}"
+  state_bucket = "tfstate-${var.account_id}"
 }
 
 data "aws_iam_policy_document" "this" {
+  # List bucket (required for terraform init)
   statement {
-    sid    = "TerraformStateManagement"
+    sid    = "TerraformStateList"
     effect = "Allow"
     actions = [
-      "s3:CreateBucket",
       "s3:ListBucket",
       "s3:GetBucketLocation",
-      "s3:GetBucketVersioning",
-      "s3:PutBucketVersioning",
-      "s3:GetEncryptionConfiguration",
-      "s3:PutEncryptionConfiguration",
-      "s3:GetBucketPublicAccessBlock",
-      "s3:PutBucketPublicAccessBlock",
+      "s3:GetBucketVersioning"
+    ]
+    resources = ["arn:aws:s3:::${local.state_bucket}"]
+  }
+
+  # Read/write scoped to key prefix
+  statement {
+    sid    = "TerraformStateReadWrite"
+    effect = "Allow"
+    actions = [
       "s3:GetObject",
       "s3:PutObject",
       "s3:DeleteObject"
     ]
-    resources = [
-      "arn:aws:s3:::${local.state_bucket}",
-      "arn:aws:s3:::${local.state_bucket}/*"
-    ]
+    resources = ["arn:aws:s3:::${local.state_bucket}/${var.state_key_prefix}/*"]
   }
 }

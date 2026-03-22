@@ -29,9 +29,10 @@ module "reverse-proxy" {
 }
 
 module "state" {
-  source     = "../policy-library/state"
-  prefix     = var.prefix
-  account_id = var.account_id
+  source           = "../policy-library/state"
+  prefix           = var.prefix
+  account_id       = var.account_id
+  state_key_prefix = var.state_key_prefix
 }
 
 module "static-website" {
@@ -55,14 +56,14 @@ module "platform-services" {
 
 locals {
   policy_map = {
-    "api"            = module.api.policy_json
-    "bedrock"        = module.bedrock.policy_json
-    "control-plane"  = module.control-plane.policy_json
-    "iam"            = module.iam.policy_json
-    "state"          = module.state.policy_json
-    "reverse-proxy"  = module.reverse-proxy.policy_json
-    "static-website" = module.static-website.policy_json
-    "vpn"              = module.vpn.policy_json
+    "api"               = module.api.policy_json
+    "bedrock"           = module.bedrock.policy_json
+    "control-plane"     = module.control-plane.policy_json
+    "iam"               = module.iam.policy_json
+    "state"             = module.state.policy_json
+    "reverse-proxy"     = module.reverse-proxy.policy_json
+    "static-website"    = module.static-website.policy_json
+    "vpn"               = module.vpn.policy_json
     "platform-services" = module.platform-services.policy_json
   }
 }
