@@ -9,6 +9,7 @@ module "vpn_project" {
   allowed_branches   = ["main"]
   allow_pull_request = true
 
-  prefix         = "vpn"
-  policy_modules = ["vpn", "iam", "state", "reverse-proxy"]
+  prefix           = "vpn"
+  state_key_prefix = "platform"
+  policy_modules   = ["vpn", "iam", "state", "reverse-proxy"]
 }

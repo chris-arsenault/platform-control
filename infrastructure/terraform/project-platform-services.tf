@@ -9,6 +9,7 @@ module "platform_services_project" {
   allowed_branches   = ["main"]
   allow_pull_request = true
 
-  prefix         = "platform"
-  policy_modules = ["platform-services", "state"]
+  prefix           = "platform"
+  state_key_prefix = "platform"
+  policy_modules   = ["platform-services", "state"]
 }

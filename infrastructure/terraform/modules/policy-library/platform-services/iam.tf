@@ -75,9 +75,9 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    sid    = "IamPassToLambda"
-    effect = "Allow"
-    actions = ["iam:PassRole"]
+    sid       = "IamPassToLambda"
+    effect    = "Allow"
+    actions   = ["iam:PassRole"]
     resources = ["*"]
     condition {
       test     = "StringLike"
@@ -254,9 +254,9 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    sid    = "AllowAttachBasicExecPolicy"
-    effect = "Allow"
-    actions = ["iam:AttachRolePolicy"]
+    sid       = "AllowAttachBasicExecPolicy"
+    effect    = "Allow"
+    actions   = ["iam:AttachRolePolicy"]
     resources = ["*"]
     condition {
       test     = "ArnEquals"

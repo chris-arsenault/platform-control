@@ -9,6 +9,7 @@ module "boilerplate_project" {
   allowed_branches   = ["main"]
   allow_pull_request = true
 
-  prefix         = "boilerplate"
-  policy_modules = ["control-plane", "state"]
+  prefix           = "boilerplate"
+  state_key_prefix = "platform"
+  policy_modules   = ["control-plane", "state"]
 }
