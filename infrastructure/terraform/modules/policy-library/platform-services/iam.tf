@@ -209,6 +209,50 @@ data "aws_iam_policy_document" "this" {
     ]
   }
 
+  # --- RDS ---
+  statement {
+    sid    = "RDS"
+    effect = "Allow"
+    actions = [
+      "rds:CreateDBInstance",
+      "rds:DeleteDBInstance",
+      "rds:ModifyDBInstance",
+      "rds:DescribeDBInstances",
+      "rds:CreateDBSubnetGroup",
+      "rds:DeleteDBSubnetGroup",
+      "rds:DescribeDBSubnetGroups",
+      "rds:ModifyDBSubnetGroup",
+      "rds:AddTagsToResource",
+      "rds:RemoveTagsFromResource",
+      "rds:ListTagsForResource"
+    ]
+    resources = [
+      "arn:aws:rds:*:${var.account_id}:db:${var.prefix}-*",
+      "arn:aws:rds:*:${var.account_id}:subgrp:${var.prefix}-*"
+    ]
+  }
+
+  # --- EC2 (security groups for RDS) ---
+  statement {
+    sid    = "EC2SecurityGroups"
+    effect = "Allow"
+    actions = [
+      "ec2:CreateSecurityGroup",
+      "ec2:DeleteSecurityGroup",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeSecurityGroupRules",
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:RevokeSecurityGroupIngress",
+      "ec2:AuthorizeSecurityGroupEgress",
+      "ec2:RevokeSecurityGroupEgress",
+      "ec2:CreateTags",
+      "ec2:DeleteTags",
+      "ec2:DescribeVpcs",
+      "ec2:DescribeSubnets"
+    ]
+    resources = ["*"]
+  }
+
   statement {
     sid    = "AllowAttachBasicExecPolicy"
     effect = "Allow"
