@@ -6,7 +6,7 @@ TF_DIR="${ROOT_DIR}/infrastructure/terraform"
 
 STATE_BUCKET="${STATE_BUCKET:-tfstate-559098897826}"
 STATE_REGION="${STATE_REGION:-us-east-1}"
-GITHUB_PAT="${GITHUB_PAT:-$(gh auth token)}"
+GITHUB_PAT="${GITHUB_PAT:?GITHUB_PAT must be set}"
 
 # --- Ensure shared state bucket exists ---
 
