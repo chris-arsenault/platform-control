@@ -53,11 +53,18 @@ module "platform-services" {
   account_id = var.account_id
 }
 
+module "cognito-client" {
+  source     = "../policy-library/cognito-client"
+  prefix     = var.prefix
+  account_id = var.account_id
+}
+
 
 locals {
   policy_map = {
     "api"               = module.api.policy_json
     "bedrock"           = module.bedrock.policy_json
+    "cognito-client"    = module.cognito-client.policy_json
     "control-plane"     = module.control-plane.policy_json
     "iam"               = module.iam.policy_json
     "state"             = module.state.policy_json
