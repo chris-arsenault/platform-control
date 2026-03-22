@@ -46,7 +46,7 @@ fi
 
 # --- Terraform ---
 
-terraform -chdir="${TF_DIR}" init \
+terraform -chdir="${TF_DIR}" init -reconfigure \
   -backend-config="bucket=${STATE_BUCKET}" \
   -backend-config="region=${STATE_REGION}" \
   -backend-config="use_lockfile=true"
