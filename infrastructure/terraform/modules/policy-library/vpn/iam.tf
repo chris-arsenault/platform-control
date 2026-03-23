@@ -97,6 +97,8 @@ data "aws_iam_policy_document" "this" {
       "autoscaling:DescribeAutoScalingGroups",
       "autoscaling:DescribeScalingActivities",
       "autoscaling:SetDesiredCapacity",
+      "autoscaling:StartInstanceRefresh",
+      "autoscaling:DescribeInstanceRefreshes",
       "autoscaling:CreateOrUpdateTags",
       "autoscaling:DeleteTags",
       "autoscaling:DescribeTags"
