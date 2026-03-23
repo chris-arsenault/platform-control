@@ -54,6 +54,22 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
+    sid    = "KMS"
+    effect = "Allow"
+    actions = [
+      "kms:Decrypt",
+      "kms:GenerateDataKey",
+      "kms:DescribeKey"
+    ]
+    resources = ["*"]
+    condition {
+      test     = "StringEquals"
+      variable = "kms:ViaService"
+      values   = ["s3.us-east-1.amazonaws.com"]
+    }
+  }
+
+  statement {
     sid    = "CloudFront"
     effect = "Allow"
     actions = [
