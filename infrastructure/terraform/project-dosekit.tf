@@ -1,21 +1,20 @@
-module "project_websites" {
+module "project_dosekit" {
   source = "./modules/managed-project"
 
   oidc_provider_arn = aws_iam_openid_connect_provider.github.arn
   account_id        = local.account_id
 
   github_pat         = var.github_pat
-  allowed_repos      = ["websites"]
+  allowed_repos      = ["dosekit"]
   allowed_branches   = ["main"]
   allow_pull_request = true
 
-  prefix           = "websites"
-  state_key_prefix = "projects/websites"
+  prefix           = "dosekit"
+  state_key_prefix = "projects/dosekit"
   policy_modules = [
     "state",
     "api",
-    "bedrock",
-    "iam",
+    "cognito-client",
     "static-website"
   ]
 }
