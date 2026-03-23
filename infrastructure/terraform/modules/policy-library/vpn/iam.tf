@@ -85,6 +85,26 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
+    sid = "LaunchTemplatesAndAutoscaling"
+    actions = [
+      "ec2:CreateLaunchTemplate",
+      "ec2:CreateLaunchTemplateVersion",
+      "ec2:DeleteLaunchTemplate",
+      "ec2:ModifyLaunchTemplate",
+      "autoscaling:CreateAutoScalingGroup",
+      "autoscaling:UpdateAutoScalingGroup",
+      "autoscaling:DeleteAutoScalingGroup",
+      "autoscaling:DescribeAutoScalingGroups",
+      "autoscaling:DescribeScalingActivities",
+      "autoscaling:SetDesiredCapacity",
+      "autoscaling:CreateOrUpdateTags",
+      "autoscaling:DeleteTags",
+      "autoscaling:DescribeTags"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
     sid = "ManageIamForInstanceProfiles"
     actions = [
       "iam:CreateRole",
@@ -125,7 +145,10 @@ data "aws_iam_policy_document" "this" {
       "ssm:AddTagsToResource",
       "ssm:RemoveTagsFromResource"
     ]
-    resources = ["arn:aws:ssm:*:*:parameter/${var.prefix}/*"]
+    resources = [
+      "arn:aws:ssm:*:*:parameter/${var.prefix}/*",
+      "arn:aws:ssm:*:*:parameter/platform/network/*"
+    ]
   }
 
   statement {
