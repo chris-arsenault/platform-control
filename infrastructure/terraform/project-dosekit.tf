@@ -15,6 +15,7 @@ module "project_dosekit" {
     "state",
     "api",
     "cognito-client",
+    "db",
     "static-website"
   ]
 }
