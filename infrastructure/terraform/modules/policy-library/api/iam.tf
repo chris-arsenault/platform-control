@@ -82,6 +82,34 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
+    sid = "CreateAlbResources"
+    actions = [
+      "elasticloadbalancing:CreateTargetGroup",
+      "elasticloadbalancing:CreateRule"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid = "ManageAlbScoped"
+    actions = [
+      "elasticloadbalancing:AddTags",
+      "elasticloadbalancing:DeleteTargetGroup",
+      "elasticloadbalancing:DeleteRule",
+      "elasticloadbalancing:DeregisterTargets",
+      "elasticloadbalancing:ModifyRule",
+      "elasticloadbalancing:ModifyTargetGroup",
+      "elasticloadbalancing:ModifyTargetGroupAttributes",
+      "elasticloadbalancing:RegisterTargets",
+      "elasticloadbalancing:RemoveTags",
+    ]
+    resources = [
+      "arn:aws:elasticloadbalancing:*:${var.account_id}:targetgroup/${var.prefix}-*/*",
+      "arn:aws:elasticloadbalancing:*:${var.account_id}:listener-rule/app/*/*/*/*/*"
+    ]
+  }
+
+  statement {
     sid    = "AllowRateLimitDynamo"
     effect = "Allow"
     actions = [
