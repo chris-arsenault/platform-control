@@ -107,7 +107,7 @@ data "aws_iam_policy_document" "this" {
     ]
     resources = [
       "arn:aws:elasticloadbalancing:*:${var.account_id}:targetgroup/${var.prefix}-*/*",
-      "arn:aws:elasticloadbalancing:*:${var.account_id}:listener-rule/app/*/*/*/*/*",
+      "arn:aws:elasticloadbalancing:*:${var.account_id}:listener-rule/app/*/*/*/*",
       "arn:aws:elasticloadbalancing:*:${var.account_id}:listener/app/*/*/*"
     ]
   }
