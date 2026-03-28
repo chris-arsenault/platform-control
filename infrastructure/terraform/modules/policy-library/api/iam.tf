@@ -85,7 +85,8 @@ data "aws_iam_policy_document" "this" {
     sid = "CreateAlbResources"
     actions = [
       "elasticloadbalancing:CreateTargetGroup",
-      "elasticloadbalancing:CreateRule"
+      "elasticloadbalancing:CreateRule",
+      "elasticloadbalancing:AddTags"
     ]
     resources = ["*"]
   }
@@ -93,7 +94,6 @@ data "aws_iam_policy_document" "this" {
   statement {
     sid = "ManageAlbScoped"
     actions = [
-      "elasticloadbalancing:AddTags",
       "elasticloadbalancing:DeleteTargetGroup",
       "elasticloadbalancing:DeleteRule",
       "elasticloadbalancing:DeregisterTargets",
@@ -107,7 +107,7 @@ data "aws_iam_policy_document" "this" {
     ]
     resources = [
       "arn:aws:elasticloadbalancing:*:${var.account_id}:targetgroup/${var.prefix}-*/*",
-      "arn:aws:elasticloadbalancing:*:${var.account_id}:listener-rule/app/*/*/*/*/*",
+      "arn:aws:elasticloadbalancing:*:${var.account_id}:listener-rule/app/*/*/*/*",
       "arn:aws:elasticloadbalancing:*:${var.account_id}:listener/app/*/*/*"
     ]
   }
