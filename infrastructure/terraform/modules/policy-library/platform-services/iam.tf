@@ -253,6 +253,40 @@ data "aws_iam_policy_document" "this" {
     resources = ["*"]
   }
 
+  # --- ELB (target groups & listener rules for ALB) ---
+  statement {
+    sid    = "CreateAlbResources"
+    effect = "Allow"
+    actions = [
+      "elasticloadbalancing:CreateTargetGroup",
+      "elasticloadbalancing:CreateRule"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid    = "ManageAlbScoped"
+    effect = "Allow"
+    actions = [
+      "elasticloadbalancing:AddTags",
+      "elasticloadbalancing:DeleteTargetGroup",
+      "elasticloadbalancing:DeleteRule",
+      "elasticloadbalancing:DeregisterTargets",
+      "elasticloadbalancing:ModifyRule",
+      "elasticloadbalancing:ModifyTargetGroup",
+      "elasticloadbalancing:ModifyTargetGroupAttributes",
+      "elasticloadbalancing:RegisterTargets",
+      "elasticloadbalancing:RemoveTags",
+      "elasticloadbalancing:AddListenerCertificates",
+      "elasticloadbalancing:RemoveListenerCertificates",
+    ]
+    resources = [
+      "arn:aws:elasticloadbalancing:*:${var.account_id}:targetgroup/${var.prefix}-*/*",
+      "arn:aws:elasticloadbalancing:*:${var.account_id}:listener-rule/app/*/*/*/*/*",
+      "arn:aws:elasticloadbalancing:*:${var.account_id}:listener/app/*/*/*"
+    ]
+  }
+
   statement {
     sid       = "AllowAttachBasicExecPolicy"
     effect    = "Allow"
