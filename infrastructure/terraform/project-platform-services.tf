@@ -11,5 +11,5 @@ module "platform_services_project" {
 
   prefix           = "platform"
   state_key_prefix = "platform"
-  policy_modules   = ["platform-services", "state"]
+  policy_modules   = ["platform-services", "state", "reverse-proxy"]
 }
