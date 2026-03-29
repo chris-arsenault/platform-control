@@ -154,12 +154,14 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    sid = "CreateSecretKeys"
+    sid = "ManageSecrets"
     actions = [
       "secretsmanager:CreateSecret",
       "secretsmanager:TagResource",
       "secretsmanager:DescribeSecret",
       "secretsmanager:DeleteSecret",
+      "secretsmanager:GetSecretValue",
+      "secretsmanager:PutSecretValue",
       "secretsmanager:GetResourcePolicy",
       "secretsmanager:PutResourcePolicy"
     ]
