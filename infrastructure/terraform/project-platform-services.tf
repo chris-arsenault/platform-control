@@ -26,5 +26,6 @@ module "platform_services_project" {
     "ec2-security-groups",
     "iam-roles",
     "iam-instance-profiles",
+    "db-migrate",
   ]
 }

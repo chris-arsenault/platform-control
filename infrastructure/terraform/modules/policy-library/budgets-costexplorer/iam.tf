@@ -7,7 +7,9 @@ data "aws_iam_policy_document" "this" {
       "budgets:CreateBudget",
       "budgets:DeleteBudget",
       "budgets:ModifyBudget",
-      "budgets:ViewBudget"
+      "budgets:ViewBudget",
+      "budgets:TagResource",
+      "budgets:UntagResource"
     ]
     resources = ["*"]
   }
@@ -23,7 +25,9 @@ data "aws_iam_policy_document" "this" {
       "ce:CreateAnomalySubscription",
       "ce:DeleteAnomalySubscription",
       "ce:GetAnomalySubscriptions",
-      "ce:UpdateAnomalySubscription"
+      "ce:UpdateAnomalySubscription",
+      "ce:TagResource",
+      "ce:UntagResource"
     ]
     resources = ["*"]
   }
