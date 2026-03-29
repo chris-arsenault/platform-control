@@ -3,7 +3,7 @@ resource "github_actions_secret" "state_bucket" {
 
   repository      = each.value
   secret_name     = "STATE_BUCKET"
-  plaintext_value = module.state.state_bucket
+  plaintext_value = module.terraform-state.state_bucket
 }
 
 resource "github_actions_secret" "oidc_role" {

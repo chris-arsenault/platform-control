@@ -11,5 +11,5 @@ module "boilerplate_project" {
 
   prefix           = "boilerplate"
   state_key_prefix = "platform"
-  policy_modules   = ["control-plane", "state"]
+  policy_modules   = ["control-plane", "terraform-state"]
 }

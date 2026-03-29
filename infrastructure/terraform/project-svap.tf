@@ -12,12 +12,14 @@ module "project_svap" {
   prefix           = "svap"
   state_key_prefix = "projects/svap"
   policy_modules = [
-    "state",
-    "api",
-    "bedrock",
+    "terraform-state",
+    "lambda-deploy",
     "cognito-client",
-    "db",
-    "iam",
-    "static-website"
+    "s3-website",
+    "cloudfront-distribution",
+    "acm-dns",
+    "bedrock-inference",
+    "iam-roles",
+    "db-migrate",
   ]
 }

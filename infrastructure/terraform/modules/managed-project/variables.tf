@@ -35,6 +35,12 @@ variable "state_key_prefix" {
   type        = string
 }
 
+variable "ssm_additional_parameter_paths" {
+  description = "Additional SSM parameter path prefixes this project can write to (for ssm-write module)"
+  type        = list(string)
+  default     = []
+}
+
 variable "tags" {
   description = "Tags to apply to the role"
   type        = map(string)
