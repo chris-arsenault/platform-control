@@ -4,11 +4,17 @@ locals {
 
 data "aws_iam_policy_document" "this" {
   statement {
-    sid    = "MigrationsBucketList"
+    sid    = "MigrationsBucketManagement"
     effect = "Allow"
     actions = [
+      "s3:CreateBucket",
       "s3:ListBucket",
-      "s3:GetBucketLocation"
+      "s3:GetBucketLocation",
+      "s3:PutBucketTagging",
+      "s3:PutBucketVersioning",
+      "s3:PutBucketPublicAccessBlock",
+      "s3:PutEncryptionConfiguration",
+      "s3:Get*"
     ]
     resources = ["arn:aws:s3:::${local.migrations_bucket}"]
   }
