@@ -9,7 +9,23 @@ module "vpn_project" {
   allowed_branches   = ["main"]
   allow_pull_request = true
 
-  prefix           = "vpn"
-  state_key_prefix = "platform"
-  policy_modules   = ["vpn", "iam", "state", "reverse-proxy"]
+  prefix                         = "vpn"
+  state_key_prefix               = "platform"
+  ssm_additional_parameter_paths = ["platform/network/*"]
+  policy_modules = [
+    "terraform-state",
+    "ec2-vpc-compute",
+    "alb-loadbalancer",
+    "alb-target-group",
+    "wafv2",
+    "cloudfront-distribution",
+    "acm-dns",
+    "cognito-pool",
+    "cognito-client",
+    "cognito-identity-pool",
+    "iam-roles",
+    "iam-instance-profiles",
+    "ssm-write",
+    "secrets-manager",
+  ]
 }
