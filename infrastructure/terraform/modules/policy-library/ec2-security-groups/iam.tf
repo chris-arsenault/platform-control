@@ -9,7 +9,7 @@ data "aws_iam_policy_document" "this" {
     resources = ["*"]
     condition {
       test     = "StringEqualsIfExists"
-      variable = "aws:RequestTag/project"
+      variable = "aws:RequestTag/Project"
       values   = [var.prefix]
     }
   }
@@ -29,7 +29,7 @@ data "aws_iam_policy_document" "this" {
     resources = ["*"]
     condition {
       test     = "StringEquals"
-      variable = "aws:ResourceTag/project"
+      variable = "aws:ResourceTag/Project"
       values   = [var.prefix]
     }
   }
