@@ -13,6 +13,13 @@ module "project_truenas" {
   state_key_prefix = "projects/truenas"
   policy_modules = [
     "terraform-state",
-    "komodo-deploy"
+    "komodo-deploy",
+    "cognito-client",
+    "ssm-write"
+  ]
+
+  ssm_additional_parameter_paths = [
+    "platform/sonarqube",
+    "platform/auth-trigger/clients/sonarqube"
   ]
 }
