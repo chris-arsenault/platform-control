@@ -152,6 +152,14 @@ module "wafv2" {
   account_id = var.account_id
 }
 
+# ── TrueNAS / Komodo ────────────────────────────────────────
+
+module "komodo-deploy" {
+  source     = "../policy-library/komodo-deploy"
+  prefix     = var.prefix
+  account_id = var.account_id
+}
+
 # ── Account Governance ───────────────────────────────────────
 
 module "budgets-costexplorer" {
@@ -187,6 +195,7 @@ locals {
     "ec2-security-groups"     = module.ec2-security-groups.policy_json
     "ec2-vpc-compute"         = module.ec2-vpc-compute.policy_json
     "wafv2"                   = module.wafv2.policy_json
+    "komodo-deploy"           = module.komodo-deploy.policy_json
     "budgets-costexplorer"    = module.budgets-costexplorer.policy_json
   }
 }
