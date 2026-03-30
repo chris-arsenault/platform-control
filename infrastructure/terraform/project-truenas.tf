@@ -19,7 +19,7 @@ module "project_truenas" {
   ]
 
   ssm_additional_parameter_paths = [
-    "platform/sonarqube",
-    "platform/auth-trigger/clients/sonarqube"
+    "platform/sonarqube/*",
+    "platform/auth-trigger/clients/*"
   ]
 }
