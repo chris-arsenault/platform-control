@@ -15,7 +15,9 @@ module "project_truenas" {
     "terraform-state",
     "komodo-deploy",
     "cognito-client",
-    "ssm-write"
+    "ssm-write",
+    "lambda-deploy",
+    "iam-roles"
   ]
 
   ssm_additional_parameter_paths = [
