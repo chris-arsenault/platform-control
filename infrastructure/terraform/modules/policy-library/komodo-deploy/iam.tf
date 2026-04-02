@@ -7,7 +7,8 @@ data "aws_iam_policy_document" "this" {
     ]
     resources = [
       "arn:aws:lambda:*:${var.account_id}:function:platform-komodo-proxy",
-      "arn:aws:lambda:*:${var.account_id}:function:platform-truenas-db-manage"
+      "arn:aws:lambda:*:${var.account_id}:function:platform-truenas-db-manage",
+      "arn:aws:lambda:*:${var.account_id}:function:platform-sonarqube-bootstrap"
     ]
   }
 }
