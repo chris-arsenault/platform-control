@@ -1,4 +1,4 @@
-name: Deploy Control Plane
+name: CI/CD
 
 on:
   push:
@@ -18,6 +18,9 @@ permissions:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.ref == 'refs/heads/main' && 'platform-control-deploy' || format('platform-control-{0}', github.ref) }}
+      cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
     defaults:
       run:
@@ -25,12 +28,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Configure AWS credentials via OIDC
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: ${{ secrets.OIDC_ROLE }}
           role-session-name: GitHubActions-${{ github.run_id }}
@@ -47,7 +50,7 @@ jobs:
           key: ${{ runner.os }}-tf-plugins
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v4
         with:
           terraform_version: 1.12.2
 
@@ -86,8 +89,8 @@ jobs:
     needs: [terraform]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: aws-actions/configure-aws-credentials@v4
+      - uses: actions/checkout@v6
+      - uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: ${{ secrets.OIDC_ROLE }}
           role-session-name: GitHubActions-${{ github.run_id }}
