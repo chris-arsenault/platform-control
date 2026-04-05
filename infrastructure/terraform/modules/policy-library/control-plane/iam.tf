@@ -69,6 +69,17 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
+    sid    = "ReadPlatformControlSSM"
+    effect = "Allow"
+    actions = [
+      "ssm:GetParameter",
+    ]
+    resources = [
+      "arn:aws:ssm:*:${var.account_id}:parameter/platform/control/*",
+    ]
+  }
+
+  statement {
     sid    = "AllowPolicyUpdates"
     effect = "Allow"
     actions = [
