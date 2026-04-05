@@ -10,47 +10,4 @@ on:
 jobs:
   ci:
     uses: chris-arsenault/platform/.github/workflows/ci.yml@main
-    with:
-      deploy: false
     secrets: inherit
-
-  deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: [ci]
-    runs-on: ubuntu-latest
-    concurrency:
-      group: platform-control-deploy
-      cancel-in-progress: false
-    defaults:
-      run:
-        working-directory: infrastructure/terraform
-    steps:
-      - uses: actions/checkout@v6
-      - uses: hashicorp/setup-terraform@v4
-        with:
-          terraform_version: 1.12.2
-
-      - uses: aws-actions/configure-aws-credentials@v6
-        with:
-          role-to-assume: ${{ secrets.OIDC_ROLE }}
-          role-session-name: GitHubActions-${{ github.run_id }}
-          aws-region: us-east-1
-
-      - name: Terraform Init
-        env:
-          TF_CLI_ARGS: -no-color
-        run: |
-          terraform init \
-            -backend-config bucket=${{ secrets.STATE_BUCKET }} \
-            -backend-config region=us-east-1
-
-      - name: Terraform Plan
-        env:
-          TF_VAR_github_pat: ${{ secrets.PAT }}
-          TF_CLI_ARGS: -no-color
-        run: terraform plan -input=false -out=tfplan
-
-      - name: Terraform Apply
-        env:
-          TF_CLI_ARGS: -no-color
-        run: terraform apply -input=false -auto-approve tfplan
