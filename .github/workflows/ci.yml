@@ -54,6 +54,9 @@ jobs:
         with:
           terraform_version: 1.12.2
 
+      - name: Lint terraform
+        run: terraform fmt -check -recursive
+
       - uses: chris-arsenault/platform/.github/actions/sonar-scan@main
         continue-on-error: true
         with:
