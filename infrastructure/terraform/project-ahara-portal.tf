@@ -15,6 +15,11 @@ module "project_ahara_portal" {
     "terraform-state",
     "cognito-client",
     "ssm-write",
+    "iam-roles",
+    "lambda-deploy",
+    "acm-dns",
+    "cloudfront-distribution",
+    "s3-website",
   ]
 
   ssm_additional_parameter_paths = [
