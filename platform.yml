@@ -1,0 +1,4 @@
+project: platform-control
+prefix: boilerplate
+stack:
+  - terraform

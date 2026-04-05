@@ -32,6 +32,8 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: chris-arsenault/platform/.github/actions/governance-check@main
+
       - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v6
         with:
