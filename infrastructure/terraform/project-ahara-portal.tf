@@ -18,6 +18,8 @@ module "project_ahara_portal" {
     "iam-roles",
     "lambda-deploy",
     "acm-dns",
+    "alb-target-group",
+    "dynamodb",
     "cloudfront-distribution",
     "s3-website",
   ]
