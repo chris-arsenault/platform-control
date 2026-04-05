@@ -9,8 +9,8 @@ module "project_nas_sonarqube" {
   allowed_branches   = ["main"]
   allow_pull_request = true
 
-  prefix           = "truenas"
-  state_key_prefix = "projects/truenas"
+  prefix           = "nas-sonarqube"
+  state_key_prefix = "projects/nas-sonarqube"
   policy_modules = [
     "terraform-state",
     "komodo-deploy",
