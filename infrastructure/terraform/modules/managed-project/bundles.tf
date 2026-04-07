@@ -17,7 +17,6 @@ locals {
       "kms-admin",
       "iam-roles",
       "lambda-deploy", # for the optional OG server Lambda
-      "ssm-write",     # reads platform/og-server SSM params
     ])
 
     "alb-api" = toset([
@@ -29,7 +28,6 @@ locals {
 
     "cognito-app" = toset([
       "cognito-client",
-      "ssm-write", # publishes client ID to SSM
     ])
 
     lambda = toset([
