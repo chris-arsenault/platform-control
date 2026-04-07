@@ -11,20 +11,20 @@ module "platform_services_project" {
 
   prefix           = "platform"
   state_key_prefix = "platform"
+
+  # alb-api module is used by ci-ingest
+  module_bundles = ["alb-api"]
+
   policy_modules = [
     "terraform-state",
-    "lambda-deploy",
-    "alb-target-group",
     "cognito-pool",
     "cognito-client",
     "dynamodb",
     "rds",
     "sns",
-    "acm-dns",
     "budgets-costexplorer",
     "ssm-write",
     "ec2-security-groups",
-    "iam-roles",
     "iam-instance-profiles",
     "db-migrate",
   ]

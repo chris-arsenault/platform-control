@@ -11,17 +11,12 @@ module "project_ahara_portal" {
 
   prefix           = "ahara-portal"
   state_key_prefix = "projects/ahara-portal"
+
+  module_bundles = ["website", "alb-api", "cognito-app"]
+
   policy_modules = [
     "terraform-state",
-    "cognito-client",
-    "ssm-write",
-    "iam-roles",
-    "lambda-deploy",
-    "acm-dns",
-    "alb-target-group",
     "dynamodb",
-    "cloudfront-distribution",
-    "s3-website",
   ]
 
   ssm_additional_parameter_paths = [

@@ -11,13 +11,12 @@ module "project_nas_sonarqube" {
 
   prefix           = "nas-sonarqube"
   state_key_prefix = "projects/nas-sonarqube"
+
+  module_bundles = ["lambda", "cognito-app"]
+
   policy_modules = [
     "terraform-state",
     "komodo-deploy",
-    "cognito-client",
-    "ssm-write",
-    "lambda-deploy",
-    "iam-roles"
   ]
 
   ssm_additional_parameter_paths = [

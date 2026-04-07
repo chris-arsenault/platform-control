@@ -132,6 +132,12 @@ module "secrets-manager" {
   account_id = var.account_id
 }
 
+module "kms-admin" {
+  source     = "../policy-library/kms-admin"
+  prefix     = var.prefix
+  account_id = var.account_id
+}
+
 # ── EC2 & Networking ─────────────────────────────────────────
 
 module "ec2-security-groups" {
@@ -192,6 +198,7 @@ locals {
     "sns"                     = module.sns.policy_json
     "ssm-write"               = module.ssm-write.policy_json
     "secrets-manager"         = module.secrets-manager.policy_json
+    "kms-admin"               = module.kms-admin.policy_json
     "ec2-security-groups"     = module.ec2-security-groups.policy_json
     "ec2-vpc-compute"         = module.ec2-vpc-compute.policy_json
     "wafv2"                   = module.wafv2.policy_json

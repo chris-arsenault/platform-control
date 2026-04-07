@@ -50,7 +50,7 @@ resource "aws_iam_role" "this" {
 }
 
 resource "aws_iam_role_policy" "inline_modules" {
-  for_each = var.policy_modules
+  for_each = local.effective_policy_modules
   role     = aws_iam_role.this.id
   name     = each.value
   policy   = local.policy_map[each.value]

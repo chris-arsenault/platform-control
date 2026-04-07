@@ -11,15 +11,12 @@ module "project_svap" {
 
   prefix           = "svap"
   state_key_prefix = "projects/svap"
+
+  module_bundles = ["website", "alb-api", "cognito-app"]
+
   policy_modules = [
     "terraform-state",
-    "lambda-deploy",
-    "cognito-client",
-    "s3-website",
-    "cloudfront-distribution",
-    "acm-dns",
     "bedrock-inference",
-    "iam-roles",
     "db-migrate",
   ]
 }

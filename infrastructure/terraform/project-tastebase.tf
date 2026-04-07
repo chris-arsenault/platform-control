@@ -11,16 +11,12 @@ module "project_tastebase" {
 
   prefix           = "tastebase"
   state_key_prefix = "projects/tastebase"
+
+  module_bundles = ["website", "alb-api", "cognito-app"]
+
   policy_modules = [
     "terraform-state",
-    "lambda-deploy",
-    "alb-target-group",
-    "cognito-client",
-    "s3-website",
-    "cloudfront-distribution",
-    "acm-dns",
     "bedrock-inference",
-    "iam-roles",
     "db-migrate",
   ]
 }

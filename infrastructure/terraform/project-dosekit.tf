@@ -11,15 +11,12 @@ module "project_dosekit" {
 
   prefix           = "dosekit"
   state_key_prefix = "projects/dosekit"
+
+  module_bundles = ["website", "alb-api", "cognito-app"]
+
   policy_modules = [
     "terraform-state",
-    "lambda-deploy",
-    "alb-target-group",
     "dynamodb",
-    "cognito-client",
-    "s3-website",
-    "cloudfront-distribution",
-    "acm-dns",
     "db-migrate",
   ]
 }

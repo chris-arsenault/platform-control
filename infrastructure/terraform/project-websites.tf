@@ -11,14 +11,12 @@ module "project_websites" {
 
   prefix           = "websites"
   state_key_prefix = "projects/websites"
+
+  module_bundles = ["website", "alb-api"]
+
   policy_modules = [
     "terraform-state",
-    "lambda-deploy",
     "dynamodb",
-    "s3-website",
-    "cloudfront-distribution",
-    "acm-dns",
     "bedrock-inference",
-    "iam-roles",
   ]
 }

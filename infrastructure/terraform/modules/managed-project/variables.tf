@@ -25,7 +25,13 @@ variable "allow_pull_request" {
 }
 
 variable "policy_modules" {
-  description = "List of policy modules to provision"
+  description = "Individual policy primitives to attach to the deployer role (for things outside the ahara-tf-patterns shared modules)"
+  type        = set(string)
+  default     = []
+}
+
+variable "module_bundles" {
+  description = "ahara-tf-patterns modules this project uses. Auto-expands to the set of policy primitives each module needs. Valid values: 'website', 'alb-api', 'cognito-app', 'lambda'."
   type        = set(string)
   default     = []
 }
