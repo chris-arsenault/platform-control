@@ -73,4 +73,27 @@ data "aws_iam_policy_document" "this" {
       values   = ["arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"]
     }
   }
+
+  # CloudWatch log groups for Lambda functions. The ahara-tf-patterns
+  # lambda module creates these explicitly (with a 14-day retention)
+  # rather than letting the first invocation auto-create them.
+  statement {
+    sid    = "LambdaLogGroups"
+    effect = "Allow"
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:DeleteLogGroup",
+      "logs:DescribeLogGroups",
+      "logs:PutRetentionPolicy",
+      "logs:DeleteRetentionPolicy",
+      "logs:TagResource",
+      "logs:UntagResource",
+      "logs:ListTagsForResource",
+      "logs:ListTagsLogGroup",
+    ]
+    resources = [
+      "arn:aws:logs:*:${var.account_id}:log-group:/aws/lambda/${var.prefix}-*",
+      "arn:aws:logs:*:${var.account_id}:log-group:/aws/lambda/${var.prefix}-*:*",
+    ]
+  }
 }
