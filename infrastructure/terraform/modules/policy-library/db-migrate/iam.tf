@@ -33,15 +33,23 @@ data "aws_iam_policy_document" "this" {
 
   # The migrations bucket has versioning enabled, so delete operations
   # on individual object versions require s3:DeleteObjectVersion.
+  # Object tagging perms are required because provider-level default_tags
+  # apply to aws_s3_object resources on put.
   statement {
     sid    = "MigrationsBucketReadWrite"
     effect = "Allow"
     actions = [
       "s3:GetObject",
       "s3:GetObjectVersion",
+      "s3:GetObjectTagging",
+      "s3:GetObjectVersionTagging",
       "s3:PutObject",
+      "s3:PutObjectTagging",
+      "s3:PutObjectVersionTagging",
       "s3:DeleteObject",
       "s3:DeleteObjectVersion",
+      "s3:DeleteObjectTagging",
+      "s3:DeleteObjectVersionTagging",
     ]
     resources = local.migrations_bucket_prefixes
   }
