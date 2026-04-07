@@ -14,7 +14,15 @@ data "aws_iam_policy_document" "this" {
       "lambda:DeleteAlias",
       "lambda:AddPermission",
       "lambda:RemovePermission",
-      "lambda:TagResource"
+      "lambda:TagResource",
+      "lambda:UntagResource",
+      "lambda:ListTags",
+      # Function URLs — required by the ahara-tf-patterns website module's
+      # OG server Lambda (aws_lambda_function_url). Scoped to prefix-*
+      # functions by the resource ARN below.
+      "lambda:CreateFunctionUrlConfig",
+      "lambda:UpdateFunctionUrlConfig",
+      "lambda:DeleteFunctionUrlConfig",
     ]
     resources = ["arn:aws:lambda:*:${var.account_id}:function:${var.prefix}-*"]
   }
